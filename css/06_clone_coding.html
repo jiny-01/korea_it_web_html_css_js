@@ -16,6 +16,40 @@
         #wrapper {
         width: 100vw;
       }
+
+      #header-container {
+        width: 100vw;
+        height: 47px;
+        background-color: black;
+        position: fixed;
+        z-index: 10;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        /* 1부터 9까지 가능한데 숫자 높을수록 우선순위 높아짐(위로 올라감) */
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #menu-container {
+        /* background-color: aquamarine; */
+        
+        display: flex;
+      }
+
+      #search-icon {
+        background-color: burlywood;
+      }
+      
+      .menu-item {
+        
+        box-sizing: border-box;
+        padding: 12px 24px;
+        color: white;
+      }
+
+      .menu-item:hover {
+        background-color: #ccc;
+        color: black;
+      }
       
 
       #img-container {
@@ -27,7 +61,6 @@
         width: 350px;
         position:absolute;
         text-align: center;
-        border: 1px solid red;
         color: wheat;
         bottom: 0;
         left: 50%; 
@@ -103,6 +136,17 @@
 </head>
 <body>
     <div id="wrapper">
+      <div id="header-container">
+        <div id="menu-container">
+          <div class="menu-item">HOME</div>
+          <div class="menu-item">BAND</div>
+          <div class="menu-item">TOUR</div>
+          <div class="menu-item">CONTACT</div>
+          <div class="menu-item">MORE</div>
+        </div>
+        <div id="search-icon">아이콘</div>
+        <div></div>
+      </div>
         <div id="img-container">
             <img id="slide-img" src="https://www.w3schools.com/w3images/ny.jpg" alt="" />
                 <div id="img-text">
