@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 선택자 배우기</title>
+    <style>
+      * {
+        margin: 0;
+      }
+      #main-title {
+        font-size: 40px;
+        color: brown;
+      }
+      p {
+        font-size: 20px;
+      }
+      .p-class {
+        color: coral;
+      }
+      header > p {
+        color: blue;
+      }
+      div > div > h1 {
+        font-size: 60px;
+      }
+      .btn:hover {
+        background-color: red;
+      }
+      input:focus {
+        border: 3px solid blue;
+      }
+      input {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="main-title">CSS 선택자 학습</h1>
+    <header>
+      <p>이 페이지는 다양한 CSS 선택자를 배웁니다.</p>
+    </header>
+    <h2>1. 기본 선택자</h2>
+    <p class="p-class">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, facilis
+      unde, quisquam excepturi hic expedita amet tenetur, asperiores eius
+      placeat officiis libero odio vero inventore neque dolorem explicabo esse
+      porro.
+    </p>
+    <p class="p-class">
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure recusandae
+      est laudantium fuga consequuntur? Saepe facilis veniam, magni, modi
+      voluptatum neque incidunt illo deserunt delectus, consequuntur obcaecati
+      debitis consectetur explicabo?
+    </p>
+    <p class="p-class">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
+      exercitationem dolorum, sapiente placeat quaerat quos consequatur mollitia
+      et, officiis ea in ipsum doloribus non eos? Similique numquam at repellat
+      ab.
+    </p>
+    <div>
+      <div><h1>제목</h1></div>
+    </div>
+    <button class="btn">버튼</button>
+    <input type="text" />
+  </body>
+</html>
