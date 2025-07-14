@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <title>W3.CSS Template</title>
     <style>
       body,
@@ -16,11 +20,11 @@
       }
 
       #wrapper {
-        width: 100vw;
+        width: 100%;
       }
 
       #header-container {
-        width: 100vw;
+        width: 100%;
         height: 47px;
         background-color: black;
         position: fixed;
@@ -36,7 +40,21 @@
       }
 
       #search-icon {
-        background-color: skyblue;
+        width: 80px;
+        height: 47px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #search-icon:hover {
+        background-color: rgb(206, 41, 41);
+      }
+
+      #search-icon > p {
+        margin: 0;
+        padding-right: 12px;
       }
 
       .menu-item {
@@ -50,7 +68,7 @@
       }
 
       #img-container {
-        width: 100vw;
+        width: 100%;
         position: relative;
       }
 
@@ -66,11 +84,11 @@
       }
 
       #slide-img {
-        width: 100vw;
+        width: 100%;
       }
 
       #band-container {
-        width: 100vw;
+        width: 100%;
         height: 600px;
         display: flex;
         justify-content: center;
@@ -125,6 +143,122 @@
       .member-card > p {
         text-align: center;
       }
+
+      #tour-dates-container {
+        width: 100%;
+        height: 840px;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #tour-dates-box {
+        width: 768px;
+        height: 718px;
+        /* background-color: darkslategray; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #tour-dates-box > p {
+        color: #333;
+        text-align: center;
+      }
+
+      #tour-dates-box > h2 {
+        color: white;
+        text-align: center;
+      }
+
+      #dates-box {
+        width: 768px;
+        height: 120px;
+        background-color: white;
+        padding: 0;
+      }
+
+      .dates-item {
+        width: 100%;
+        height: 40px;
+        padding: 8px 16px;
+        color: #757575;
+        list-style-type: none;
+        line-height: 24px;
+        /* p태그의 기준줄 내림 */
+        
+      }
+      /* 몇 번째 자식 선택할지 */
+      .dates-item:nth-child(1), .dates-item:nth-child(2) {
+        border-bottom: 1px solid #dbdbdb;
+        box-sizing: border-box;
+      }
+      
+      .dates-item:nth-child(1) > span, 
+      .dates-item:nth-child(2) > span
+      {
+        margin-left: 5px;
+        background-color: orangered;
+        color: #ffffff;
+        font-size: 14px;
+        padding: 3px 4px;
+
+      }
+      .dates-item:nth-child(3) > span {
+        background-color: black;
+        color: #ffffff;
+        border: 1px solid black;
+        box-sizing: border-box;
+        border-radius: 50%;
+        padding-left: 8px;
+        padding-right: 8px;
+        text-align: center;
+      }
+
+      .dates-item:nth-child(3) {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #ticket-card-box {
+        width: 768px;
+        height: 480px;
+        margin-top: 10px;
+        background-color: antiquewhite;
+        
+        display: flex;
+        justify-content: space-between;
+        
+      }
+      .card {
+        width: 245px;
+        height: 380px;
+        background-color: #757575;
+      
+      }
+      .card-img-box {
+        width: 100%;
+        height: 180px;
+        background-color: aquamarine;
+      }
+      .card-img-box > img {
+        width: 100%;
+        object-fit: cover;
+        /* object-fit 옵션
+        --contain : 가로, 세로 비율 맞게 들어가는 대신 여백 생김 /
+        --cover : 가로, 세로 비율 맞게 들어가는데 여백을 알아서 확대해서 채움 
+                  -> 결과적으로 여백 안보임
+        --fill : 지정된 가로, 세로 크기대로 들어감 대신 비율 다 깨져서 들어감
+                (억지로 가로 세로 크기 맞게 넣는 것) */
+      }
+      .card-text-box {
+        width: 100%;
+        height: 200px;
+        background-color: aqua;
+      }
+      
     </style>
   </head>
   <body>
@@ -137,7 +271,9 @@
           <div class="menu-item">CONTACT</div>
           <div class="menu-item">MORE</div>
         </div>
-        <div id="search-icon">아이콘</div>
+        <div id="search-icon">
+          <i class="fa-solid fa-magnifying-glass" style="color: #ffffff"></i>
+        </div>
       </div>
       <div id="img-container">
         <img
@@ -198,6 +334,43 @@
                 width="153"
                 height="153"
               />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="tour-dates-container">
+        <div id="tour-dates-box">
+          <h2>TOUR DATES</h2>
+          <p><em>Remember to book your tickets!</em></p>
+          <ul id="dates-box">
+            <li class="dates-item">September <span>Sold Out</span></li>
+            <li class="dates-item">October <span>Sold Out</span></li>
+            <li class="dates-item">November <span>3</span></li>
+          </ul>
+          <div id="ticket-card-box">
+            <div class="card">
+              <div class="card-img-box">
+                <img src="https://www.w3schools.com/w3images/newyork.jpg" alt="" />
+              </div>
+              <div class="card-text-box">\
+                <h2>New York</h2>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-img-box">
+                <img src="https://www.w3schools.com/w3images/paris.jpg" alt="" />
+              </div>
+              <div class="card-text-box">
+                <h3>Paris</h3>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-img-box">
+                <img src="https://www.w3schools.com/w3images/sanfran.jpg" alt="" />
+              </div>
+              <div class="card-text-box">
+                <h3>San Francisco</h3>
+              </div>
             </div>
           </div>
         </div>
