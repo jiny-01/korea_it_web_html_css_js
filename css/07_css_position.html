@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>position 내용</title>
+    <style>
+        main {
+            width: 300px;
+            height: 400px;
+            background-color: tomato;
+            position: relative;
+            overflow: auto;
+
+        }
+        
+        div {
+            width: 200px;
+            height: 100px;
+            border: 1px solid yellow;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        div:nth-of-type(2) {
+            background-color: aqua;
+            opacity: 0.8;
+            position: sticky;
+            top: 28px;
+            left: 48px;
+        }
+        /*  
+            position 속성 디폴트값은 static
+            *   position: relative
+            -원래 자기가 있던 위치 기준
+            top, bottom, left, right 로 위치 조절
+
+            *   position: absolute;  - 웬만해선 잘 안 씀
+            -부모(상위태그) 중 position 잡힌 거 찾음
+             없으면 가장 위에 것 (body 태그) 
+             -> 원래 위치 기준이 아닌 상위 요소 중 relative 인 것을 기준으로 함
+             -> 없으면 가장 상위 태그 기준
+
+             *  position: fixed;
+             -> 스크롤, 화면 전환 상관없이 고정 
+             -> viewport(뷰포트 기준 : 브라우저의 전체화면)
+             */
+
+    </style>
+</head>
+<body>
+    <main>
+        <div>position: static;</div>
+        <div>position: absolute;</div>
+        <div>position: static;</div>
+        <div>position: static;</div>
+        <div>position: static;</div>
+        <div>position: static;</div>
+        <div>position: static;</div>
+    </main>
+    
+</body>
+</html>
