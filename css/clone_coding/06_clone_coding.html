@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>W3.CSS Template</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        margin: 0;
+      }
+
+      #wrapper {
+        width: 100%;
+      }
+
+      #header-container {
+        width: 100%;
+        height: 47px;
+        background-color: black;
+        position: fixed;
+        z-index: 10;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+          0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #menu-container {
+        display: flex;
+      }
+
+      #search-icon {
+        width: 80px;
+        height: 47px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #search-icon:hover {
+        background-color: rgb(206, 41, 41);
+      }
+
+      #search-icon > p {
+        margin: 0;
+        padding-right: 12px;
+      }
+
+      .menu-item {
+        padding: 12px 24px;
+        color: white;
+      }
+
+      .menu-item:hover {
+        background-color: #ccc;
+        color: black;
+      }
+
+      #img-container {
+        width: 100%;
+        position: relative;
+      }
+
+      #img-container > div {
+        width: 350px;
+        text-align: center;
+        position: absolute;
+        right: 50%;
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%, -50%);
+        color: white;
+      }
+
+      #slide-img {
+        width: 100%;
+      }
+
+      #band-container {
+        width: 100%;
+        height: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #band-content-box {
+        width: 800px;
+        height: 600px;
+        margin-top: 20px;
+      }
+
+      #band-text-box {
+        width: 100%;
+        height: 50%;
+      }
+
+      #band-member-box {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      #text-header-box {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 20px;
+      }
+
+      #text-header-box > h2 {
+        letter-spacing: 5px;
+        font-size: 30px;
+        font-weight: 400;
+      }
+      
+
+      #band-text-box > p {
+        font-size: 15px;
+      }
+
+      #text-header-box > p {
+        color: #333;
+      }
+
+      .member-card {
+        width: 180px;
+        height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .member-card > p {
+        text-align: center;
+      }
+
+      #tour-dates-container {
+        width: 100%;
+        height: 840px;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #tour-dates-box {
+        width: 768px;
+        height: 718px;
+        /* background-color: darkslategray; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #tour-dates-box > p {
+        color: grey;
+        text-align: center;
+      }
+
+      #tour-dates-box > h2 {
+        color: white;
+        text-align: center;
+        font-size: 30px;
+        font-weight: 400;
+        letter-spacing: 5px;
+      }
+
+      #dates-box {
+        width: 768px;
+        height: 120px;
+        background-color: white;
+        padding: 0;
+      }
+
+      .dates-item {
+        width: 100%;
+        height: 40px;
+        padding: 8px 16px;
+        font-size: 15px;
+        color: #757575;
+        list-style-type: none;
+        line-height: 24px;
+        /* p태그의 기준줄 내림 */
+        
+      }
+      /* 몇 번째 자식 선택할지 */
+      .dates-item:nth-child(1), .dates-item:nth-child(2) {
+        border-bottom: 1px solid #dbdbdb;
+        box-sizing: border-box;
+      }
+      
+      .dates-item:nth-child(1) > span, 
+      .dates-item:nth-child(2) > span
+      {
+        margin-left: 5px;
+        background-color: orangered;
+        color: #ffffff;
+        font-size: 14px;
+        padding: 3px 6px;
+
+      }
+      .dates-item:nth-child(3) > span {
+        background-color: black;
+        color: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid black;
+        box-sizing: border-box;
+        border-radius: 50%;
+        padding-left: 8px;
+        padding-right: 8px;
+        text-align: center;
+      }
+
+      .dates-item:nth-child(3) {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #ticket-card-box {
+        width: 768px;
+        height: 480px;
+        margin-top: 10px;
+        /* background-color: antiquewhite; */
+        
+        display: flex;
+        justify-content: space-between;
+        
+      }
+      .card {
+        width: 245px;
+        height: 380px;
+        background-color: white;
+      
+      }
+      .card-img-box {
+        width: 100%;
+        height: 180px;
+        background-color: aquamarine;
+      }
+      .card-img-box > img {
+        width: 100%;
+        object-fit: cover;
+        /* object-fit 옵션
+        --contain : 가로, 세로 비율 맞게 들어가는 대신 여백 생김 /
+        --cover : 가로, 세로 비율 맞게 들어가는데 여백을 알아서 확대해서 채움 
+                  -> 결과적으로 여백 안보임
+        --fill : 지정된 가로, 세로 크기대로 들어감 대신 비율 다 깨져서 들어감
+                (억지로 가로 세로 크기 맞게 넣는 것) */
+      }
+      .card-text-box {
+        width: 100%;
+        height: 200px;
+       
+        /* background-color: aquamarine; */
+        
+      }
+
+      .card-text-box {
+        padding: 14px 16px;
+        box-sizing: border-box;
+      }
+      
+      .card-text-box > h3 {
+        margin: 0px;
+        padding-top: 5px;
+        font-size: 15px;
+      }
+
+      .card-text-box > p {
+        font-size: 15px;
+      }
+
+      .date-text {
+        color: gray;
+      }
+      .card-text-box > button:hover {
+        background-color: lightgray;
+        color: black;
+      }
+      .card-text-box > button {
+        padding: 8px 16px;
+        font-size: 15px;
+        border: none;
+        background-color: black;
+        color: white;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header-container">
+        <div id="menu-container">
+          <div class="menu-item">HOME</div>
+          <div class="menu-item">BAND</div>
+          <div class="menu-item">TOUR</div>
+          <div class="menu-item">CONTACT</div>
+          <div class="menu-item">MORE</div>
+        </div>
+        <div id="search-icon">
+          <i class="fa-solid fa-magnifying-glass" style="color: #ffffff"></i>
+        </div>
+      </div>
+      <div id="img-container">
+        <img
+          id="slide-img"
+          src="https://www.w3schools.com/w3images/ny.jpg"
+          alt=""
+        />
+        <div>
+          <h2>New York</h2>
+          <p>The atmosphere in New York is lorem ipsum.</p>
+        </div>
+      </div>
+      <div id="band-container">
+        <div id="band-content-box">
+          <div id="band-text-box">
+            <div id="text-header-box">
+              <h2>THE BAND</h2>
+              <p><em>We love music</em></p>
+            </div>
+            <p>
+              We have created a fictional band website. Lorem ipsum dolor sit
+              amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+              ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt mollit anim id est laborum consectetur adipiscing
+              elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+              aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+              laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+          </div>
+          <div id="band-member-box">
+            <div class="member-card">
+              <p>Name</p>
+              <img
+                src="https://www.w3schools.com/w3images/bandmember.jpg"
+                alt=""
+                width="153"
+                height="153"
+              />
+            </div>
+            <div class="member-card">
+              <p>Name</p>
+              <img
+                src="https://www.w3schools.com/w3images/bandmember.jpg"
+                alt=""
+                width="153"
+                height="153"
+              />
+            </div>
+            <div class="member-card">
+              <p>Name</p>
+              <img
+                src="https://www.w3schools.com/w3images/bandmember.jpg"
+                alt=""
+                width="153"
+                height="153"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="tour-dates-container">
+        <div id="tour-dates-box">
+          <h2>TOUR DATES</h2>
+          <p><em>Remember to book your tickets!</em></p>
+          <ul id="dates-box">
+            <li class="dates-item">September <span>Sold Out</span></li>
+            <li class="dates-item">October <span>Sold Out</span></li>
+            <li class="dates-item">November <span>3</span></li>
+          </ul>
+          <div id="ticket-card-box">
+            <div class="card">
+              <div class="card-img-box">
+                <img src="https://www.w3schools.com/w3images/newyork.jpg" alt="" />
+              </div>
+              <div class="card-text-box">
+                <h3>New York</h3>
+                <p class="date-text">Fri 27 Nov 2016</p>
+                <p>Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                <button>Buy Tickets</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-img-box">
+                <img src="https://www.w3schools.com/w3images/paris.jpg" alt="" />
+              </div>
+              <div class="card-text-box">
+                <h3>Paris</h3>
+                <p class="date-text">Sat 28 Nov 2016</p>
+                <p>Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                <button>Buy Tickets</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-img-box">
+                <img src="https://www.w3schools.com/w3images/sanfran.jpg" alt="" />
+              </div>
+              <div class="card-text-box">
+                <h3>San Francisco</h3>
+                <p class="date-text">Sun 29 Nov 2016</p>
+                <p>Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                <button>Buy Tickets</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
