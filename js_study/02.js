@@ -45,3 +45,60 @@ const 함수명4 = (매개변수1, 매개변수2) => {
 //     console.log("fx1 호출")
 // }
 const fx1 = () => console.log("fx1 호출");
+const fx2 = (n) => console.log(n, "출력");
+// const fx_2 = n => console.log(n, "출력");  //괄호 없애기도 가능
+
+const fx3 = (n) => n + 1;
+const fx4 = (n) => {
+  console.log(n, "출력");
+  return n + 1;
+};
+const fx5 = (a, b) => a * b;
+fx1();
+console.log(fx3(10));
+
+function a() {
+  // 빈 함수 가능
+}
+
+const 리턴값4 = 함수명;
+//함수를 호출한 게 아님, 함수명 자체를 리턴값 4에 할당
+//const 리턴값4 = 함수명();  -> () 있으면 함수의 리턴값을 리턴할 것
+console.log(리턴값4()); //-> null : 함수의 리턴값 출력할 것
+
+console.log("--고차함수--");
+const aa = () =>  {
+    console.log("aa함수 호출")
+    return "aa함수 리턴값"
+}
+
+const bb = (fxx) =>  {
+    console.log("bb함수 호출")
+    return fxx;
+}
+
+const aaa = (fxx, fxx2) => {
+    console.log("aaa함수 호출")
+    console.log(fxx())  //
+    console.log(fxx2()) //aa
+    return "aaa함수 리턴값"
+}
+console.log(aaa(bb(aa), bb(aa)))
+
+//bb(aa) 안에서부터 
+// bb "함수 호출"
+// bb "함수 호출" / fxx : aa 함수 -> fxx, 즉 aa 함수를 리턴
+//  aa함수 리턴 =>  "aa 함수 호출"
+//                  "aa함수 리턴값"
+// 다음 aaa 함수로 감
+// aaa 함수 실행 => "aaa함수 호출"
+// aaa(bb(aa))
+// console.log(fxx()) 실행, fxx() : 함수
+
+//                  "aaa함수 호출"
+// console.log(fxx())  -> "aa함수 호출"
+//                         "aa 함수 리턴값"
+// console.log(fxx2())  -> "aa 함수 호출"
+//                          "aa 함수 리턴값"
+// return "aaa함수 리턴값"     => "aaa함수 리턴값" 
+            
