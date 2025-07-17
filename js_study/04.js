@@ -34,7 +34,7 @@ console.log(obj1 === obj2); //메모리 주소(참조) 비교- 따로 만들었�
 //Json.parse() => JSON 문자열을 자바스크립트 객체 또는 배열을 변환
 // stringify <-> parse
 //
-console.log("--배열과 JSON--")
+console.log("--배열과 JSON--");
 const json1 = JSON.stringify(arr1);
 const json2 = JSON.stringify(arr2);
 console.log(json1);
@@ -47,17 +47,16 @@ const json3 = JSON.stringify(obj1);
 const json4 = JSON.stringify(obj2);
 console.log(json3);
 console.log(json4);
-console.log(json3 === json4);  // -> true
+console.log(json3 === json4); // -> true
 
 //배열의 다양한 기본 내장함수
-console.log("--배열의 기본 함수--")
+console.log("--배열의 기본 함수--");
 const names = ["이동윤", "삼동윤", "사동윤"];
-names.push("오동윤")
+names.push("오동윤");
 console.log(names);
 // 상수인데 추가?
 // const 가 재할당을 금지하는 것일 뿐, 참조하는 객체(즉 배열)의 내용 변경까지 막는 것은 아님
 // names = ["육동윤"] 이건 재할당이므로 금지됨
-
 
 //요소 제거 : pop() => 배열의 마지막 요소를 제거하고 제거된 요소를 반환
 console.log(names.pop());
@@ -73,3 +72,37 @@ const foundName = names.find(findFx);
 //자바에서의 stream.filter -> 조건을 만족하는 것 반환
 console.log(foundName);
 
+const students = [
+  { name: "이동윤", age: 27 },
+  { name: "삼동윤", age: 28 },
+  { name: "사동윤", age: 27 },
+  { name: "오동윤", age: 28 },
+  { name: "오동윤", age: 27 },
+];
+
+console.log(students.find((s) => s.name === "삼동윤"));
+
+//값 존재 여부 : includes() - 배열에 특정 값이 포함되어 있는지 boolean 으로 반환
+console.log(names.includes("육동윤"));
+//names에 해당 값이 포함되어 있으면 true
+
+//필터링: filter() - 주어진 조건 함수를 통과하는 모든 요소로 새로운 배열을 만든다.
+//원본 배열은 영향을 주지 않음
+const numbers = [1, 2, 3, 4, 5];
+console.log(numbers.filter((n) => n % 2 === 0));
+const even = numbers.filter((n) => n % 2 === 0);
+console.log(students.filter((student) => student.age === 27));
+// students.stream().filter(student -> student.getAge == 27).collect(Collector.toList())
+
+//map() - 배열의 모든 요소에 대해 주어진 함수를 적용(호출)한 결과를 모아 새로운 배열을 반환
+console.log(numbers.map((n) => n * 10));
+console.log(students.map((student) => {
+    if (student.age === 27) {
+        // 나이가 27인 학생은 이름만 있는 새로운 객체로 반환
+        return {
+            name: student.name, 
+        }
+    }
+    return student;
+})
+);
