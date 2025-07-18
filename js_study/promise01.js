@@ -1,4 +1,7 @@
 // promise 는 기본적으로 자바스크립트의 비동기처리에 사용되는 객체
+// Promise는 콜백 함수와 유사한 역할(비동기 처리) 을 하지만,
+// "콜백지옥(callback hell)"을 피하고,
+// 코드를 더 읽기 쉽게 하기 위해 
 
 // promise 객체는 state 와 result 라는 속성을 가지고 있다.
 // state 에는 3가지 (state 당 result 가지고 있음)
