@@ -41,11 +41,40 @@ const d22 = d11.querySelector("#d2");
 const rd2 = document.getElementById("d2");
 // rd2.innerHTML = "김지니";
 
-//태그를 넣을 수도 있음 
+//태그를 넣을 수도 있음
 const d222 = document.querySelector("#d1 > #d2");
-d222.innerHTML = "<p>innerHTML</p>";      //innerHTML - 태그로 인식
-d222.innerText = "<p>innerText</p>";      //innerText - 내용만 들어감(텍스트로)
+d222.innerHTML = "<p>innerHTML</p>"; //innerHTML - 태그로 인식
+d222.innerText = "<p>innerText</p>"; //innerText - 내용만 들어감(텍스트로)
 // dd2.innerHTML = "김지니";
 
 //테이블
-const 
+const students = [
+  { name: "이동윤", age: 27, address: "부산 사하구" },
+  { name: "김주엽", age: 23, address: "런던" },
+  { name: "최호진", age: 17, address: "시애틀" },
+];
+
+//tbody 안에 데이터 넣기
+//순회해서 tr의 td 에 넣는다 -
+const studentTableTbody = document.querySelector(".student_table > tbody");
+const studentTrs = students.map((s, index) => {
+  return `<tr>
+    <td>${index + 1}</td>
+    <td>${s.name}</td>
+    <td>${s.age}</td>
+    <td>${s.address}</td>
+    </tr>`;
+});
+
+studentTableTbody.innerHTML = studentTrs.join("");
+
+//"<tr>
+// <td>1</td>
+// <td>이동윤</td>
+// <td>27</td><td>
+// 부산</td></tr>"    이런식으로 테이블에 데이터가 들어감
+
+//----------------------------------------------------------
+//테이블에 CSS 적용
+const tdList = document.querySelectorAll("td");
+tdList.forEach((td) => (td.style = "border: 1px solid black"));
