@@ -75,6 +75,13 @@ studentTableTbody.innerHTML = studentTrs.join("");
 // 부산</td></tr>"    이런식으로 테이블에 데이터가 들어감
 
 //----------------------------------------------------------
-//테이블에 CSS 적용
+//테이블에 CSS 적용 (스타일 적용)
 const tdList = document.querySelectorAll("td");
 tdList.forEach((td) => (td.style = "border: 1px solid black"));
+
+const studentTable = document.querySelector("student_table");
+studentTable.id = "table-student"  //.id : 아이디 추가도 가능
+studentTable.classList.add("newstudentclass");  // .classList.add : 클래스 추가도 가능 (삭제 : remove)
+// studentTable.classList.remove("newstudentclass")
+
+
