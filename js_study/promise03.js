@@ -58,7 +58,7 @@ function purchase() {
 
 
 
-//promise chaining
+//promise chaining -> promise 자체를 리턴하기 때문에 가능
 // purchase
 //     .then((username) => {console.log(username)})
 //     .then((product) => {console.log(product)})
