@@ -23,7 +23,8 @@ addbtn.onclick = () => {
   //   tableBody.innerHTML += inputAge.value
   //   tableBody.innerHTML += inputAdr.value
 
-  table.innerHTML += `
+  //+= : 쌓여서 들어감 
+  tableBody.innerHTML += `
     <tr>
         <td>${count++}</td>
         <td>${nameValue}</td>
@@ -54,7 +55,7 @@ addbtn.onclick = () => {
 //   inputAge.value = "";
 //   inputAdr.value = "";
 
-  if (!inputName.value || !inputAge.value || !inputAdr.value === "") {
+  if (nameValue === "" || ageValue === "" || addressValue === "") {
     alert("입력하세요");
     return;
   }
