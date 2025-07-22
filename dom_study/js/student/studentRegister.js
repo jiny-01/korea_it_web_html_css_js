@@ -15,8 +15,9 @@ function handleRegisterOnkeyup(e) {
     ...studentInputValue, //spread 문법으로 속성복사
     [e.target.name]: e.target.value,
     //해당요소안의 name 속성을 키로(name, age, address)
-    //e.target.value : 각각 요소의 입력값
+    //e.target.value : 각각 e(input)요소의 입력값
   };
+
   console.log("key up:", e.target.name, e.target.value)
 }
 
