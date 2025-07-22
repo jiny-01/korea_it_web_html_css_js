@@ -4,13 +4,16 @@ let count = 1;
 addbtn.onclick = () => {
   console.log("클릭됨");
   const inputName = document.querySelector("#input-name"); //사용자가 입력한 값 확인
-  console.log(inputName);
+  const nameValue = inputName.value;
+  console.log(nameValue);
 
   const inputAge = document.querySelector("#input-age");
-  console.log(inputAge);
+  const ageValue = inputAge.value;
+  console.log(ageValue);
 
   const inputAdr = document.querySelector("#input-address");
-  console.log(inputAdr);
+  const addressValue = inputAdr.value;
+  console.log(addressValue);
 
   //   const tableData = document.querySelector(".table-data");
 
@@ -20,22 +23,38 @@ addbtn.onclick = () => {
   //   tableBody.innerHTML += inputAge.value
   //   tableBody.innerHTML += inputAdr.value
 
-  const tableData = `
+  table.innerHTML += `
     <tr>
-      <td>${count++}</td>
-      <td>${inputName.value}</td>
-      <td>${inputAge.value}</td>
-      <td>${inputAdr.value}</td>
-    </tr>
+        <td>${count++}</td>
+        <td>${nameValue}</td>
+        <td>${ageValue}</td>
+        <td>${addressValue}</td>
+        </tr>
   `;
 
-  tableBody.innerHTML += tableData;
+  count++;
 
+  //입력값 초기화
   inputName.value = "";
   inputAge.value = "";
   inputAdr.value = "";
 
-  if (inputName.value || inputAge.value || inputAdr.value === "") {
+//   const tableData = `
+//     <tr>
+//       <td>${count++}</td>
+//       <td>${inputName.value}</td>
+//       <td>${inputAge.value}</td>
+//       <td>${inputAdr.value}</td>
+//     </tr>
+//   `;
+
+//   tableBody.innerHTML += tableData;
+
+//   inputName.value = "";
+//   inputAge.value = "";
+//   inputAdr.value = "";
+
+  if (!inputName.value || !inputAge.value || !inputAdr.value === "") {
     alert("입력하세요");
     return;
   }
