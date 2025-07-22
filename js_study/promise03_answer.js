@@ -38,7 +38,7 @@ login("이동윤", (username) => {
 //--------------------------------------------------------------------------------------------------
 //callback ==> promise
 
-//로그인
+//로그인 
 function login(username) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {

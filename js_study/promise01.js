@@ -47,7 +47,7 @@ console.log(promise); //-> pending 상태, result : undefined 로 나옴 -> 서�
 //   resolve();
 // });
 //이렇게 하면 에러뜨는데 왜?
-//getData() 를 최소 한번은 호출해야한다??
+//getData() 안에 있어서..?
 
 setTimeout(() => {
   console.log(promise);
