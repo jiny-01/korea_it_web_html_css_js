@@ -25,7 +25,7 @@ function handleRegisterOnkeyup(e) {
 const handleRegisterOnClick = (e) => {
   let newId = 1;
   if (studentList.length > 0) {
-    const lastStudent = studentList[studentList.length - 1]; //배열의 마지막 거
+    const lastStudent = studentList[studentList.length - 1];  //배열의 마지막 거
     //마지막거 가져와서 거기에 +1 로 추가하기 위함
     newId = lastStudent.id + 1;
   }
@@ -37,7 +37,7 @@ const handleRegisterOnClick = (e) => {
 
   studentList = [...studentList, newStudent];
   console.log(newStudent);
-   loadStudentList();
+    loadStudentList();
 };
 
 //3. register 함수 선언
