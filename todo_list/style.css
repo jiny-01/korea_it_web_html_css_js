@@ -1,33 +1,38 @@
 
 body{
+    /* 기본 폰트사이즈 : 16px */
     width: 100vw;
     height: 100vh;
+    /* 전체 화면 꽉 채움 */
     margin: 0;
     padding-top: 40px;
-    /* 위에 조금 여백 주기 */
+    /* 상단 여백 주기 */
     box-sizing: border-box;
+
     display: flex;
     justify-content: center; 
     align-items: flex-start;  
-    /* 세로정렬 */
+    /* 컨텐츠 수평 중앙, 세로는 위쪽 배치 */
     background-color: whitesmoke;
-    /* 기본 폰트사이즈 : 16px */
     
-
+    
 }
 
 .container {
-    width: 500px;
-    /* height: 140px; */
+    width: 500px;   
+    /* 고정 너비 : 500px / height: 140px; */
     /* 세로 크기는 가변 - 패딩으로 조절 */
     padding: 30px 40px;
-    border-radius: 10px;
+    /* 내부 여백 가로, 세로 */
+
     background-color: white;
+    border: 1px solid gray;
     text-align: center;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid gray;
     box-sizing: border-box;
     border-radius: 8px;
+    /* 하얀 배경, 테두리(+그림자)
+       가운데 정렬, 모서리 둥글게 */
 }
 
 h1 {
@@ -35,6 +40,7 @@ h1 {
     color: #4a90e2;
     text-align: center;
     margin-bottom: 30px;
+    /* 아래 여백 */
 }
 
 /* em 단위는 해당 요소의 부모의 font-size 에 상대적으로 크기가 변하는 거 
@@ -57,11 +63,16 @@ rem
 - 전역적인 폰트 크기, 주요 레이아웃 요소의 크기(width, height), padding, margin
 
  */
+ /* ---------------------------------------------------------------------------------- */
 
+ /* 입력 영역 */
 .input-area {
     display: flex;
+    /* 입력창과 버튼을 나란히 배치 */
     gap: 10px;
+    /* 입력창과 버튼 사이 간격 */
     margin-bottom: 25px;
+    /* 아래여백 */
     
 
 
@@ -81,11 +92,14 @@ rem
 
 
 #todoInput {
+    
     outline: none;
     border-radius: 5px;
     border: 1px solid #ddd;
     padding: 12px 15px;
+    /* 패딩 테두리, 둥근 모서리 기본 */
     font-size: 1em;
+
     flex-grow: 1;
     /* 남은 여백 다 차지하도록
     버튼과의 사이 공간은 gap 으로 조절 */
@@ -102,7 +116,7 @@ rem
     border-radius: 6px; */
 }
 
-/* input에 커서가 활성화되었을 때 */
+/* input에 커서가 활성화되었을 때 - 파란 테두리로 강조*/
 #todoInput:focus {
     border-color: #4a90e2;
     
@@ -134,47 +148,55 @@ rem
     align-items: center; */
 }
 
+/* 버튼 클릭 시 색 변경 + 위로 올라감 효과 */
 #addTodoBtn:hover {
     background-color: #357bd8;
     transform: translateY(-2px);
     cursor: pointer;
 }
 
-/* 클릭이 눌려진 상태 */
+/* 클릭이 눌려진 상태 - 원래 위치로*/
 #addTodoBtn:active {
     transform: translateY(0);
 }
 
+/* -------------------------------------------- */
+/* 입력창에 표시되는 안내텍스트 "새로운 할 일을 입력하세요" 의 스타일 지정 */
 #todoInput::placeholder {
     color: #bbb;
 }
+
 
 #todoList {
     list-style: none;
     padding: 0;
     margin: 0;
-
+    /* ul 기본 스타일 제거
+       list-style: nonne, padding&margin 초기화 */
 }
 
+
 #todoList > li {
-    background-color: antiquewhite;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     background-color: #f9f9f9;
     border: 1px solid #eee;
     border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* 텍스트와 버튼의 배치 */
     padding: 12px 15px;
     margin-bottom: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
     gap: 10px;
+    /* 내부 여백, 그림자, 간격 정리 */
     word-break: break-all;     
     /* 영역 밖을 벗어나면 알아서 줄 바꿔줌 */
 
 }
 
 
-
+/* 수정 입력창 (edit 상태) */
 .edit-input {
     padding: 8px 10px;
     outline: none;
@@ -182,14 +204,19 @@ rem
     border-radius: 4px;
     font-size: 1em;
     flex-grow: 1;
+    /* 여유 공간 채움 */
     
     
 }
 
+/* ---------------------------------------------------------- */
+/* 버튼 4개 통합 (수정, 삭제 / 저장, 취소) */
+/* 버튼 묶는 div  */
 .todo-actions {
     flex-shrink: 0;
-    /* 공간이 부족해도 이 요소는 줄어들지 않게 설정 */
+    /* 공간이 부족해도 버튼은 줄어들지 않게 설정 */
 }
+
 .todo-actions > button {
     padding: 8px 12px;
     border: none;
@@ -200,13 +227,15 @@ rem
     transition: background-color 0.2s ease;
 }
 
+/* 수정(edit) - 주황   삭제(delete) - 빨강
+   저장(save) - 초록   취소(cancel) - 회색 */
+
 .edit-btn {
     background-color: #ff9800;
 }
 
 .delete-btn {
     background-color: #f44336;
-
 }
 
 .edit-btn:hover {
@@ -216,6 +245,7 @@ rem
 .delete-btn:hover {
     background-color: #d32f2f;
 }
+
 
 .save-btn {
     background-color: #4caf50;
@@ -233,3 +263,6 @@ rem
     background-color: #757575;
 }
 
+/* em: 부모 요소 기준, 중첩된 컴포넌트에서 유용
+
+   rem: html(root) 기준, 일관된 전역 크기 조절 가능 */
