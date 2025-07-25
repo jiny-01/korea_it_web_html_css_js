@@ -19,6 +19,40 @@ const postContainer = document.querySelector("#postContainer");
 async function getData() {
   postContainer.innerHTML =
     '<p class="placeholder-text">게시물 데이터 불러오는 중...</p>';
+
+  try {
+    const response = await fetch(API_URL); //await 없으면 안기다릴 것
+    console.log(response);
+
+    // response.ok 가 아니면 or response.status===200 아니면
+    if (!response.ok) {
+      //문제가 있는 것
+      throw new Error(
+        `예외 발생! 상태: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const postData = await response.json(); //응답한 본문(body)을 json 형태로 파싱
+    console.log(postData);
+
+    postContainer.innerHTML = `
+    <h2>${postData.title}</h2>
+    <p>${postData.body}</p>
+    `;
+
+    postContainer.style.borderColor = "#28a745";
+    postContainer.style.boxShadow = "0 0 0 2px rgba(40, 167, 69, 0.2)";
+  } catch (error) {
+    console.log("게시물 불러오기 실패 : " + error);
+    postContainer.innerHTML = `
+    <p class="placeholder-text" style="color: red;">
+      데이터를 불러오는 데 실패했습니다.: ${error.message}
+    </p>
+  `;
+
+    postContainer.style.borderColor = "#dc3545";
+    postContainer.style.boxShadow = "0 0 0 2px rgba(220, 53, 69, 0.2)";
+  }
 }
 
 fetchBtn.addEventListener("click", getData);

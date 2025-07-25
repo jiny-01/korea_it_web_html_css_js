@@ -100,6 +100,14 @@ header > p {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     min-height: 120px;
+    text-align: left;
+}
+
+#postContainer > p {
+    white-space: pre-wrap;   
+    /* 줄바꿈 유지 */
+    word-wrap: break-word;
+    /* 긴 단어 줄바꿈 */
 }
 
 .post-text {
