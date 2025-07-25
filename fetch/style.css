@@ -1,0 +1,124 @@
+body { 
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding-top: 40px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start;  
+    background-color: whitesmoke;
+    
+
+
+    /* width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding-top: 40px;
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center; 
+    align-items: center; */
+    /* flex-direction: column;
+
+    background-color: antiquewhite;*/
+
+}
+
+
+.container {
+    background-color: #ffffff;
+     padding: 30px 40px;
+    border-radius: 10px;
+    min-width: 600px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+
+    /* min-width: 600px;
+    height: 400px;
+    padding: 30px 40px;
+     margin: 60px auto;  
+    margin-top: 80px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    border: none;
+    box-sizing: border-box;  */
+    
+}
+
+.container > h1 {
+  font-size: 2em;
+  text-align: center;
+  white-space: nowrap;
+  /* display : block; */
+  
+  
+}
+
+header > p {
+    color: #666;
+    font-size: 1em;
+    margin-bottom: 30px;
+}
+
+.fetch-container {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 20px;
+    background-color: #fcfcfc;
+    text-align: center;
+}
+
+#fetchBtn {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-bottom: 25px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+
+#fetBtn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);    
+}
+
+#fetBtn:active {
+    transform: translateY(0);
+}
+
+#postContainer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    min-height: 120px;
+}
+
+.post-text {
+    color: #999;
+    text-align: center;
+    font-style: italic;
+    padding-top: 30px;
+}
+/* .container > p {
+    padding: 10px;
+    background-color: aquamarine;
+    color: lightgray;
+} */
+
+/* #fetchBtn {
+    padding: 12px 25px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(89, 205, 89);
+} */
+

@@ -6,13 +6,45 @@ const todoInput = document.querySelector("#todoInput");
 const addTodoBtn = document.querySelector("#addTodoBtn");
 const todoList = document.querySelector("#todoList");
 
-
-
-
-
 //todo 를 담을 리스트
 let todos = [];
 let nextTodoId = 1;
+
+//localstorage
+//웹 브라우저가 제공하는 작은 데이터 저장공간
+//로컬 스토리지는 항상 문자열 형태로 저장
+//이름(키)과 내용(값)을 한 쌍 => JSON 문자열 형태
+//js -> JSON -> 문자열
+
+//현재 투두 데이터를 로컬스토리지에 저장하는 함수
+function saveTodoLocalStorage() {
+  console.log("저장할 todos:", todos);
+  localStorage.setItem("todos", JSON.stringify(todos));
+  //.getItem(불러오기), setItem(저장), removeItem 만 알고있으면 됨
+  //JSON.stringify() : js 객체or배열 -> JSON 문자열 형태로 변환
+}
+
+//로컬스토리지에서 투두 데이터를 불러오는 함수
+function loadTodoLocalStorage() {
+  const localStorageTodo = localStorage.getItem("todos");
+  console.log(loadTodoLocalStorage);
+
+  if (localStorageTodo) {
+    todos = JSON.parse(localStorageTodo); // JSON 문자열 → 객체
+    console.log(todos);
+    if (todos.length > 0) {
+      nextTodoId = Math.max(...todos.map((todo) => todo.id)) + 1  //값들 중 가장 큰 값
+      //저장되어 있는 투두를 불러와 다음 할 일을 추가할 때 사용할 Id를 설정
+      //투두들 중 가장 큰 id 가져와서 +1 해줌
+    } else {
+      nextTodoId = 1;
+    }
+    
+  } else {
+    todos=[];
+    nextTodoId = 1;
+  }
+}
 
 //ul 에 li 로 넣는 함수
 function renderTodo() {
@@ -74,10 +106,9 @@ function addTodo() {
   };
 
   todos.push(newTodo); //배열에 입력한 할 일 추가
-  // console.log(todos);
-  
+  saveTodoLocalStorage();
   todoInput.value = ""; //입력값 초기화
-  todoInput.focus(); //추가하면 바로 입력할 수 있도록 포커싱
+  todoInput.focus; //추가하면 바로 입력할 수 있도록 포커싱
   renderTodo();
 }
 
@@ -88,6 +119,7 @@ function deleteTodo(id) {
     return;
   } else {
     todos = todos.filter((todo) => todo.id !== id); //같지 않은 것만 고름 (같은 건 삭제)
+    saveTodoLocalStorage();
     renderTodo();
   }
 }
@@ -98,7 +130,7 @@ function editTodo(id) {
       ? { ...todo, isEditing: true }
       : { ...todo, isEditing: false }
   );
-  
+  saveTodoLocalStorage();
   renderTodo();
 
   const editInput = todoList.querySelector(`li[data-id="${id}"] .edit-input`);
@@ -106,6 +138,7 @@ function editTodo(id) {
     editInput.focus(); //커서 포커스
     editInput.select(); //드래그 효과
   }
+
 }
 
 function saveTodo(id, newText) {
@@ -118,6 +151,8 @@ function saveTodo(id, newText) {
   );
   saveTodoLocalStorage();
   renderTodo();
+
+  
 }
 
 //취소 버튼 클릭 시 실행될 함수
@@ -128,6 +163,7 @@ function cancelTodo(id) {
   );
   renderTodo();
 }
+
 
 //eventlistener (클릭되었을 때 이벤트 이름, 이벤트가 일어날 때 실행될 함수)
 //함수 호출 - 바로 되는 것(웹페이지 로드 시 바로)
@@ -163,4 +199,7 @@ todoList.addEventListener("click", (event) => {
     cancelTodo(todoId);
   }
 });
+
+loadTodoLocalStorage();
+renderTodo();
 
