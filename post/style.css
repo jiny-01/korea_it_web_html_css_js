@@ -90,3 +90,46 @@ h2 {
     border-radius: 10px;
 
 }
+
+/* list-container 안의 li 스타일 */
+.list-container > li {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    /* li 끼리의 간격 */
+    
+}
+.post-title {
+    color: #333;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.post-title:hover{
+    color: #007bff;
+    text-decoration: underline;
+    /* 밑줄 나오게 */
+}
+
+.detail-btn {
+    background-color: #17a2b8;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.detail-btn:hover {
+    background-color: #138496;
+    
+}
+
