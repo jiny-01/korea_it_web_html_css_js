@@ -81,7 +81,11 @@ async function fetchPostDetail(postId) {
     }
 
     const post = await response.json();
-    console.log(post);
+    console.log(post);  //게시물 안의 내용 확인
+    detailTitle.textContent = post.title;
+    detailId.textContent = post.id
+    detailUserId.textContent = post.userId;
+    detailBody.textContent = post.body;
   } catch (error) {
     alert("게시물 상세를 불러오는 데 실패했습니다.");
     changeContainer("postListContainer"); //실패시 목록으로 감
@@ -109,4 +113,7 @@ postList.addEventListener("click", (event) => {
     }
   }
 });
+
+//목록으로 돌아가기 버튼 감지
+
 fetchPosts();
