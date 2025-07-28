@@ -1,0 +1,92 @@
+body {
+    background-color: #f4f7f6;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    /* 브라우저의 세로높이 */
+    padding: 30px 0;
+    /* 안쪽 여백 상하 30, 좌우 0 */
+    box-sizing: border-box;
+    
+    
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    width: 100%;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+
+}
+
+header > h1 {
+    color: #007bff;
+    font-size: 2.5em;
+    /* em: body 지만 사이즈 지정이 안되어있으므로 html 기본인 16px */
+    margin-bottom: 10px;
+}
+
+header > p {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* 게시물 목록 */
+.page-container {
+    display: none;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    
+}
+
+/* active 있는 목록만 보임 - 상세는 안 보일 것 */
+.active {
+    display: block;
+}
+
+h2 {
+    color: #0056b3;
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 25px; 
+    /* h2 랑 ul 태그 사이 거리 두기 */
+}
+
+.loading-message {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+
+/* ul 부분*/
+.list-container {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 800px;
+    overflow: auto;
+    /* 스크롤 생기도록, max-height 를 넘으면 스크롤 생김 */
+}
+
+#postDetailContainer {
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+}
