@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://jsonplaceholder.typicode.com/";
+const API_BASE_URL = "https://jsonplaceholder.typicode.com";
 
 //게시물 목록 컨테이너
 const postListContainer = document.querySelector("#postListContainer");
@@ -12,13 +12,21 @@ const detailTitle = document.querySelector("#detailTitle");
 //게시물 상세 ID
 const detailId = document.querySelector("#detailId");
 //게시물 상세 유저 ID
-const detailUserId = document.querySelector("detailUserId");
+const detailUserId = document.querySelector("#detailUserId");
 //게시물 상세 내용
-const detailBody = document.querySelector("detailBody");
+const detailBody = document.querySelector("#detailBody");
 //목록으로 돌아가기 버튼
 const backBtn = document.querySelector("#backBtn");
 
-let postlists = [];
+//목록 - 상세전환 함수
+function changeContainer(containerId) {
+  //게시물 목록/ 상세 목록 2개 다 가져옴
+  const containers = document.querySelectorAll(`.page-container`);
+  containers.forEach((container) => {
+    container.classList.remove("active");
+  });
+  document.querySelector(`#${containerId}`).classList.add("active");
+}
 
 //게시물 목록 불러와서 랜더링하는 함수
 //비동기 함수, async 해서 await 붙임
@@ -40,13 +48,10 @@ async function fetchPosts() {
       posts.forEach((post) => {
         postList.innerHTML += `
         <li>
-        <span class="post-title">${post.title}</span>
-        <button class="detail-btn">상세보기</button>
+        <span class="post-title" data-post-id="${post.id}">${post.title}</span>
+        <button class="detail-btn" data-post-id="${post.id}">상세보기</button>
         </li>
         `;
-        const li = document.querySelector("li");
-        li.title = post.title;
-        li.button = post.button;
       });
     } else {
       postList.innerHTML = '<p class="loading-message">게시물이 없습니다.</p>';
@@ -58,6 +63,35 @@ async function fetchPosts() {
   }
 }
 
+//상세 요청 보내는 함수
+async function fetchPostDetail(postId) {
+  //호출되면 detailcontainer 부터 나와야함
+  changeContainer("postDetailContainer"); //상세컨테이너 나타남
+  //제목, 내용, 아이디 바꾸기
+  detailTitle.textContent = "불러오는 중...";
+  detailId.textContent = "";
+  detailUserId.textContent = "";
+  detailBody.textContent = "내용 불러오는 중...";
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/posts/${postId}`);
+    
+    if (!response.ok) {
+      throw new Error("문제 발생!");
+    }
+
+    const post = await response.json();
+    console.log(post);
+  } catch (error) {
+    alert("게시물 상세를 불러오는 데 실패했습니다.");
+    changeContainer("postListContainer"); //실패시 목록으로 감
+  }
+
+  //잘 들어오는지 확인
+  console.log("postId:", postId);
+  console.log("URL:", `${API_BASE_URL}$/posts/${postId}`);
+}
+
 //버튼 눌러질 때 감지 - 상세보기, 버튼 둘 중 하나
 postList.addEventListener("click", (event) => {
   const target = event.target;
@@ -66,8 +100,13 @@ postList.addEventListener("click", (event) => {
     target.classList.contains("post-title") ||
     target.classList.contains("detail-btn")
   ) {
-    console.log("클릭됨");
+    // console.log("클릭됨");
+    const postId = target.dataset.postId;
+    // dataset 에서는 알아서 - 있어도 카멜 케이스로 바꿈
+    if (postId) {
+      //상세 요청
+      fetchPostDetail(postId);
+    }
   }
-  
 });
 fetchPosts();
