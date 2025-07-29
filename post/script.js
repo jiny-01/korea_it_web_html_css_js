@@ -18,6 +18,12 @@ const detailBody = document.querySelector("#detailBody");
 //목록으로 돌아가기 버튼
 const backBtn = document.querySelector("#backBtn");
 
+// for (let i = 1; i <= 100; i += 10) {
+//   fetch(`https://jsonplaceholder.typicode.com/posts/${i}`)
+//     .then(res => res.json())
+//     .then(data => console.log(`postId: ${data.id}, userId: ${data.userId}`));
+// }
+
 //목록 - 상세전환 함수
 function changeContainer(containerId) {
   //게시물 목록/ 상세 목록 2개 다 가져옴
@@ -65,7 +71,7 @@ async function fetchPosts() {
 
 //상세 요청 보내는 함수
 async function fetchPostDetail(postId) {
-  //호출되면 detailcontainer 부터 나와야함
+  //호출되면 detailcontainer부터 나와야함
   changeContainer("postDetailContainer"); //상세컨테이너 나타남
   //제목, 내용, 아이디 바꾸기
   detailTitle.textContent = "불러오는 중...";
