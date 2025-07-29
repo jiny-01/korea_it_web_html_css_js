@@ -1,9 +1,97 @@
+body {
+    margin: 0;
+}
+
+.container {
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* ==============================header 부분====================== */
+header {
+    display: flex;
+    justify-content: flex-start;   
+    /* 왼쪽으로 치우치게 */
+    align-items: center;
+    background-color: #007bff;
+}
+
+nav {
+    padding: 0;
+    margin: 0;
+    display: flex;
+
+}
+
+nav > button {
+    border: none;
+    padding: 15px 30px;
+    background-color: transparent;
+    /* 부모와 같게 - 투명하게 */
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+nav > button:hover {
+    background-color: white;
+    color: black;
+}
+
+/* -=================================main 부분 ==========================*/
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    /* 연두색 부분  */
+}
 .page {
     display: none;
+    flex-direction: column;
+    /* 세로 정렬 */
+    align-items: center;
+    /* 수평 중앙 */
+    min-width: 700px;
     
 }
 
 /* 페이지 바꿀 때 기능 */
 .active {
     display: flex;
+}
+
+/* =================각각 페이지 요소들 스타일=============================== */
+h2 {
+    color: #333333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+input {
+    padding: 10px;
+    /* 안쪽 여백 줘서 크기 조절 */
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    /* 아이디-비번 사이 간격, 비번-버튼 사이 간격 띄우기 */
+}
+
+.btn-submit {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
 }
