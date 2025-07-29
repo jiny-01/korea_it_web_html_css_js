@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    
+  </head>
+  <body>
+    <!-- 전체 -->
+    <div class="container">
+      <!-- 상단 메뉴 -->
+      <header>
+        <!-- 상단 메뉴 버튼 4개 -->
+        <nav>
+          <button id="nav-signin">로그인</button>
+          <button id="nav-signup">회원가입</button>
+          <button id="nav-board">게시판</button>
+          <button id="nav-write">글쓰기</button>
+        </nav>
+      </header>
+      <!-- 버튼별로 나오는 페이지 -->
+      <!-- 공통 속성을 주기 위해 클래스 page 로 묶음 -->
+      <main>
+        <!-- 로그인 -->
+        <div id="page-signin" class="page">로그인 페이지</div>
+        <!-- 회원가입 -->
+        <div id="page-signup" class="page">회원가입 페이지</div>
+        <!-- 게시판 리스트 -->
+        <div id="page-board" class="page">게시판 리스트 페이지</div>
+        <!-- 게시판 글쓰기 -->
+        <div id="page-write" class="page">게시판 글쓰기 페이지</div>
+      </main>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>

@@ -3,7 +3,7 @@ const API_BASE_URL = "https://jsonplaceholder.typicode.com";
 //게시물 목록 컨테이너
 const postListContainer = document.querySelector("#postListContainer");
 //게시물 상세 컨테이너
-const postDetailContainer = document.querySelector("#psotDetailContainer");
+const postDetailContainer = document.querySelector("#postDetailContainer");
 //게시물 목록 ul
 const postList = document.querySelector("#postList");
 
@@ -81,15 +81,15 @@ async function fetchPostDetail(postId) {
 
   try {
     const response = await fetch(`${API_BASE_URL}/posts/${postId}`);
-    
+
     if (!response.ok) {
       throw new Error("문제 발생!");
     }
 
     const post = await response.json();
-    console.log(post);  //게시물 안의 내용 확인
+    console.log(post); //게시물 안의 내용 확인
     detailTitle.textContent = post.title;
-    detailId.textContent = post.id
+    detailId.textContent = post.id;
     detailUserId.textContent = post.userId;
     detailBody.textContent = post.body;
   } catch (error) {
@@ -122,4 +122,7 @@ postList.addEventListener("click", (event) => {
 
 //목록으로 돌아가기 버튼 감지
 
+backBtn.addEventListener("click", () => {
+  changeContainer("postListContainer");
+});
 fetchPosts();

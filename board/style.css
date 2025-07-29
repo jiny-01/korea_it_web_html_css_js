@@ -1,0 +1,9 @@
+.page {
+    display: none;
+    
+}
+
+/* 페이지 바꿀 때 기능 */
+.active {
+    display: flex;
+}
