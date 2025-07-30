@@ -15,6 +15,7 @@ const pageWrite = document.querySelector("#page-write");
 
 //signup 폼 가져오기
 const signupForm = document.querySelector("#signup-form");
+const signinForm = document.querySelector("#signin-form");
 
 //상단메뉴 버튼 4개 각각 클릭할 때 실행될 함수 - 페이지 전환 함수
 function changepages(pageElement) {
@@ -26,6 +27,75 @@ function changepages(pageElement) {
   pageElement.classList.add("active"); //선택된 거에만 active
 }
 
+
+//게시판 조회 함수
+//게시판 목록 조회 및 표시함수
+//조회해서 ul 안에 li??
+async function renderboard() {
+  //요청 보내기 전에 AccessToken 빼오기
+  //만약에 로컬 스토리지에 AccessToken 이 없으면 로그인 페이지로 전환
+  //요청 보내기
+  //fetch 에서 headers 안에 Authorizaiton: `Bearer ${AccessToken}`
+
+  //요청해서 받아온 데이터 
+  const token - 
+  
+}
+
+
+
+
+
+
+//로그인 요청 함수
+async function signinHandler(event) {
+  event.preventDefault();
+
+  //가져오기
+  const usernameInput = document.querySelector("#signin-id");
+  const passwordInput = document.querySelector("#signin-password");
+
+  //서버로 요청 보낼 데이터 형식
+  const signinData = {
+    username: usernameInput.value,
+    password: passwordInput.value,
+  };
+
+  if (!signinData.username || !signinData.password) {
+    alert("아이디 또는 비밀번호를 모두 입력해주세요.");
+    return;
+  }
+
+  try {
+    //요청 보내기
+    const response = await fetch(`${API_BASE_URL}/auth/signin`, {
+      method: "POST",
+      //cors 에러 뜰 때 header 추가해야함
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signinData), //자바 스크립트 객체를 json 문자열로 변환
+    });
+
+    const responseData = await response.json();
+    //responseData 안에 요청 응답결과 (status, message, data)
+
+    if (responseData.status !== "success") {
+      alert(responseData.message); //실패이유
+    } else {
+      alert(responseData.message); //성공 메시지 출력
+      localStorage.setItem("AccessToken", responseData.data); //토큰 로컬스토리지에 저장
+      signinForm.reset(); //폼 초기화
+
+      //===========================게시판 목록으로 전환하기=====================================================================
+      //========================================================================================================
+    }
+  } catch (error) {
+    //요청 자체에 실패한 경우
+    console.log("서버와 통신 중 오류가 발생했습니다: " + error);
+    alert("로그인 요청에 오류가 발생했습니다.");
+  }
+}
 //Backend 연결
 //회원가입 요청함수
 async function signupHandler(event) {
@@ -59,7 +129,7 @@ async function signupHandler(event) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(signupData),    //자바 스크립트 객체를 json 문자열로 변환
+      body: JSON.stringify(signupData), //자바 스크립트 객체를 json 문자열로 변환
     });
 
     const responseData = await response.json(); //요청 응답결과를 여기 담음
@@ -98,3 +168,5 @@ navWrite.addEventListener("click", () => {
 
 signupForm.addEventListener("submit", signupHandler);
 //jiny01, 1234 , allie7019@naver.com
+
+signinForm.addEventListener("submit", signinHandler);
