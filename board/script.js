@@ -27,7 +27,6 @@ function changepages(pageElement) {
   pageElement.classList.add("active"); //선택된 거에만 active
 }
 
-
 //게시판 조회 함수
 //게시판 목록 조회 및 표시함수
 //조회해서 ul 안에 li??
@@ -37,15 +36,15 @@ async function renderboard() {
   //요청 보내기
   //fetch 에서 headers 안에 Authorizaiton: `Bearer ${AccessToken}`
 
-  //요청해서 받아온 데이터 
-  const token - 
-  
+  //요청해서 받아온 데이터
+  const token = localStorage.getItem("AccessToken");
+
+  if (!token) {
+    alert("토큰이 존재하지 않습니다.");
+    changepages(pageSignin);
+    return;
+  }
 }
-
-
-
-
-
 
 //로그인 요청 함수
 async function signinHandler(event) {
