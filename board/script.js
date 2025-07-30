@@ -24,12 +24,40 @@ const boardList = document.querySelector("#board-list");
 //게시판 목록 리스트
 let boards = [];
 
+//게시판 게시물 추가
+const writeForm = document.querySelector("#write-form");
+
+//AccessToken 디코딩
+function getPayload() {
+  const token = localStorage.getItem("AccessToken");
+  if (!token) {
+    //토큰 없을 때
+    alert("토큰 없음 로그인 필요");
+    changepages(pageSignin);
+    return null;
+  }
+
+  //토큰 있을 경우
+  try {
+    // 토큰을 . 기준으로 분리해서 payload 를 가져온다
+    const payloadBase64 = token.split(".")[1];
+    const decodedPayload = atob(payloadBase64);
+    //디코딩된 JSON 문자열을 자바스크립트 객체로 변환
+    const payload = JSON.parse(decodedPayload);
+
+    return payload;
+  } catch (error) {
+    console.log(error);
+    alert("토큰 오류 발생");
+  }
+}
+
 //상단메뉴 버튼 4개 각각 클릭할 때 실행될 함수 - 페이지 전환 함수
 function changepages(pageElement) {
   const pages = document.querySelectorAll(".page"); //페이지 다 들고옴
   pages.forEach((page) => {
     //일단 전부 active 제거
-    pageElement.classList.remove("active");
+    page.classList.remove("active");
   });
   pageElement.classList.add("active"); //선택된 거에만 active
 }
@@ -62,7 +90,7 @@ async function renderboard() {
     const response = await fetch(`${API_BASE_URL}/board/list`, {
       method: "GET", //요청 메소드 - 조회 => GET
       headers: {
-        Authorization: `Bearer ${token}}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -70,33 +98,37 @@ async function renderboard() {
     // 응답 구조: { status: "success", message: "...", data: [...] }
 
     //ul 요소 선택
-    // const boards = responseData.data; 
+    // const boards = responseData.data;
 
     if (responseData.status !== "success") {
       alert(responseData.message); // 실패 메시지
       //게시물 작성 페이지로 전환
       return;
     } else {
+      //정상적으로 수행될 때
+      //boards: 게시물 목록 리스트 (위에서 빈 배열로 정의)
       boards = responseData.data; //리스트에 가져온 게시물 추가
+      boardList.innerHTML = "";
 
       boards.forEach((board) => {
-        boardList.innerHTML += `
-          <li>${board.title}</li>`;
+        boardList.innerHTML += `<li>${board.title}</li>`;
       });
-
       changepages(pageBoard);
     }
-
   } catch (error) {
     //요청 실패 시
     console.log("게시물을 불러오는 데 실패했습니다" + error);
     alert("게시물 조회에 오류가 발생했습니다.");
   }
 
-  //요청해서 받아온 게시물들 foreach => ul 안에 li로 넣기
-
   // console.log("게시물 목록:", boardList);
-  
+}
+
+//=====================게시물 추가 함수==============================
+async function addBoard(event) {
+  event.preventDefault(); //이벤트 막기
+  const userInfo = await getPayload();
+  console.log(userInfo);
 }
 
 //로그인 요청 함수
@@ -142,6 +174,7 @@ async function signinHandler(event) {
       //===========================게시판 목록으로 전환하기=====================================================================
       //========================================================================================================
       await renderboard(); //ul안에 li 넣기 - 렌더링
+      //페이지 바꾸기전 렌더링 먼저 -> await 사용
       changepages(pageBoard);
     }
   } catch (error) {
@@ -212,11 +245,14 @@ navSignup.addEventListener("click", () => {
   changepages(pageSignup);
 });
 
-navBoard.addEventListener("click", renderboard
+navBoard.addEventListener(
+  "click",
+  renderboard
   // changepages(pageBoard);    위에 render 함수에 포함되어있음
 );
 
 navWrite.addEventListener("click", () => {
+  console.log("글쓰기 클릭됨");
   changepages(pageWrite);
 });
 
@@ -225,4 +261,4 @@ signupForm.addEventListener("submit", signupHandler);
 
 signinForm.addEventListener("submit", signinHandler);
 
-boardList.addEventListener("click", renderboard);
+writeForm.addEventListener("submit", addBoard);
