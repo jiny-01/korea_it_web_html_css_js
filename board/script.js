@@ -13,9 +13,16 @@ const pageSignup = document.querySelector("#page-signup");
 const pageBoard = document.querySelector("#page-board");
 const pageWrite = document.querySelector("#page-write");
 
+//로그인 및 회원가입 폼
 //signup 폼 가져오기
 const signupForm = document.querySelector("#signup-form");
 const signinForm = document.querySelector("#signin-form");
+
+//게시판 목록
+const boardList = document.querySelector("#board-list");
+
+//게시판 목록 리스트
+let boards = [];
 
 //상단메뉴 버튼 4개 각각 클릭할 때 실행될 함수 - 페이지 전환 함수
 function changepages(pageElement) {
@@ -29,6 +36,7 @@ function changepages(pageElement) {
 
 //게시판 조회 함수
 //게시판 목록 조회 및 표시함수
+// 게시판 목록 불렀을 때, 로그인 버튼 눌렀을 때 실행
 //조회해서 ul 안에 li??
 async function renderboard() {
   //요청 보내기 전에 AccessToken 빼오기
@@ -36,14 +44,59 @@ async function renderboard() {
   //요청 보내기
   //fetch 에서 headers 안에 Authorizaiton: `Bearer ${AccessToken}`
 
-  //요청해서 받아온 데이터
-  const token = localStorage.getItem("AccessToken");
+  //요청해서 받아온 게시물들 foreach => ul 안에 li로 넣기
+  //li 는 제목만 표시되도록
 
+  const token = localStorage.getItem("AccessToken"); //토큰 빼오기
+
+  //토큰 유무따라
   if (!token) {
+    //토큰 없을 때
     alert("토큰이 존재하지 않습니다.");
     changepages(pageSignin);
     return;
   }
+
+  //요청 보내기
+  try {
+    const response = await fetch(`${API_BASE_URL}/board/list`, {
+      method: "GET", //요청 메소드 - 조회 => GET
+      headers: {
+        Authorization: `Bearer ${token}}`,
+      },
+    });
+
+    const responseData = await response.json();
+    // 응답 구조: { status: "success", message: "...", data: [...] }
+
+    //ul 요소 선택
+    // const boards = responseData.data; 
+
+    if (responseData.status !== "success") {
+      alert(responseData.message); // 실패 메시지
+      //게시물 작성 페이지로 전환
+      return;
+    } else {
+      boards = responseData.data; //리스트에 가져온 게시물 추가
+
+      boards.forEach((board) => {
+        boardList.innerHTML += `
+          <li>${board.title}</li>`;
+      });
+
+      changepages(pageBoard);
+    }
+
+  } catch (error) {
+    //요청 실패 시
+    console.log("게시물을 불러오는 데 실패했습니다" + error);
+    alert("게시물 조회에 오류가 발생했습니다.");
+  }
+
+  //요청해서 받아온 게시물들 foreach => ul 안에 li로 넣기
+
+  // console.log("게시물 목록:", boardList);
+  
 }
 
 //로그인 요청 함수
@@ -88,6 +141,8 @@ async function signinHandler(event) {
 
       //===========================게시판 목록으로 전환하기=====================================================================
       //========================================================================================================
+      await renderboard(); //ul안에 li 넣기 - 렌더링
+      changepages(pageBoard);
     }
   } catch (error) {
     //요청 자체에 실패한 경우
@@ -157,9 +212,9 @@ navSignup.addEventListener("click", () => {
   changepages(pageSignup);
 });
 
-navBoard.addEventListener("click", () => {
-  changepages(pageBoard);
-});
+navBoard.addEventListener("click", renderboard
+  // changepages(pageBoard);    위에 render 함수에 포함되어있음
+);
 
 navWrite.addEventListener("click", () => {
   changepages(pageWrite);
@@ -169,3 +224,5 @@ signupForm.addEventListener("submit", signupHandler);
 //jiny01, 1234 , allie7019@naver.com
 
 signinForm.addEventListener("submit", signinHandler);
+
+boardList.addEventListener("click", renderboard);
