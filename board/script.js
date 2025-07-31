@@ -12,6 +12,7 @@ const pageSignin = document.querySelector("#page-signin");
 const pageSignup = document.querySelector("#page-signup");
 const pageBoard = document.querySelector("#page-board");
 const pageWrite = document.querySelector("#page-write");
+const pageDetail = document.querySelector("#page-detail");
 
 //로그인 및 회원가입 폼
 //signup 폼 가져오기
@@ -26,6 +27,12 @@ let boards = [];
 
 //게시판 게시물 추가
 const writeForm = document.querySelector("#write-form");
+
+//게시물 상세 관련 요소 가져오기
+const detailTitle = document.querySelector("#detail-title");
+const detailUserId = document.querySelector("#detail-userid");
+const detailContent = document.querySelector("#detail-content");
+const backBtn = document.querySelector("#back-btn");
 
 //======================================JWT 토큰 디코딩 함수===============================
 //AccessToken 디코딩- 게시물 추가 dto 에 유저id 필요하기 때문 -> jti 로 빼옴
@@ -53,7 +60,7 @@ function getPayload() {
   }
 }
 
-//====================================페이지 전환 함수=======================================================
+//========================================페이지 전환 함수=======================================================
 //상단메뉴 버튼 4개 각각 클릭할 때 실행될 함수 - 페이지 전환 함수
 function changepages(pageElement) {
   const pages = document.querySelectorAll(".page"); //페이지 다 들고옴
@@ -67,19 +74,19 @@ function changepages(pageElement) {
 //=========================================게시판 조회 함수=========================================
 //게시판 목록 조회 및 표시함수
 // 게시판 목록 불렀을 때, 로그인 버튼 눌렀을 때 실행
-//조회해서 ul 안에 li??
+//조회해서 ul 안에 li 추가되는 로직\
+
+//요청 보내기 전에 AccessToken 빼오기
+//만약에 로컬 스토리지에 AccessToken 이 없으면 로그인 페이지로 전환
+//요청 보내기
+//fetch 에서 headers 안에 Authorizaiton: `Bearer ${AccessToken}`
+
+//요청해서 받아온 게시물들 foreach => ul 안에 li로 넣기
+//li 는 제목만 표시되도록
 async function renderboard() {
-  //요청 보내기 전에 AccessToken 빼오기
-  //만약에 로컬 스토리지에 AccessToken 이 없으면 로그인 페이지로 전환
-  //요청 보내기
-  //fetch 에서 headers 안에 Authorizaiton: `Bearer ${AccessToken}`
-
-  //요청해서 받아온 게시물들 foreach => ul 안에 li로 넣기
-  //li 는 제목만 표시되도록
-
   const token = localStorage.getItem("AccessToken"); //토큰 빼오기
 
-  //토큰 유무따라
+  //토큰 유무 확인
   if (!token) {
     //토큰 없을 때
     alert("토큰이 존재하지 않습니다.");
@@ -97,14 +104,11 @@ async function renderboard() {
     });
 
     const responseData = await response.json();
-    // 응답 구조: { status: "success", message: "...", data: [...] }
-
-    //ul 요소 선택
-    // const boards = responseData.data;
+    // ApiRespDto 응답 구조: { status: "success", message: "...", data: [...] }
 
     if (responseData.status !== "success") {
       alert(responseData.message); // 실패 메시지
-      //게시물 작성 페이지로 전환
+      changepages(pageWrite);
       return;
     } else {
       //정상적으로 수행될 때
@@ -213,24 +217,40 @@ async function addBoard(event) {
   }
 }
 
-//===================================게시물 상세 조회==================================
+//========================================게시물 상세 조회==================================
 async function getBoard(boardId) {
   event.preventDefault(); //이벤트 막기
 
   //토큰 가져오기
   const accessToken = localStorage.getItem("AccessToken");
 
-  //데이터 담을 response
-  const response = await fetch(`${API_BASE_URL}/board/${boardId}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  if (!accessToken) {
+    alert("게시물을 조회하려면 로그인이 필요합니다.");
+    changepages(pageSignin);
+    return;
+  }
 
-  //백엔드의 ApiRespDto 의 데이터를 가져옴 -> js 형태로 
-  const responseData = await response.json();
-  console.log(responseData.data);
+  try {
+    //데이터 담을 response
+    const response = await fetch(`${API_BASE_URL}/board/${boardId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    //백엔드의 ApiRespDto 의 데이터(json 문자열)를 가져옴 -> js 형태로
+    const responseData = await response.json();
+
+    //가져온 데이터를 요소에 추가해줌
+    if (responseData.status === "success") {
+      detailTitle.innerText = responseData.data.title;
+      detailUserId.innerHTML = responseData.data.userId;
+      detailContent.innerHTML = responseData.data.content;
+      changepages(pageDetail);
+    }
+    console.log(responseData.data);
+  } catch (error) {}
 }
 
 //===================================로그인 요청 함수======================================
@@ -342,7 +362,7 @@ async function signupHandler(event) {
 //버튼 눌러졌을 때 호출 - 4개 버튼 각각
 //클릭했을 때만 실행되야 하므로 익명함수로 함
 
-//로그인 
+//로그인
 navSignin.addEventListener("click", () => {
   changepages(pageSignin);
 });
@@ -364,7 +384,6 @@ navWrite.addEventListener("click", () => {
   console.log("글쓰기 클릭됨");
   changepages(pageWrite);
 });
-
 
 signupForm.addEventListener("submit", signupHandler);
 //jiny01, 1234 , allie7019@naver.com
