@@ -72,17 +72,17 @@ function changepages(pageElement) {
 }
 
 //=========================================게시판 조회 함수=========================================
-//게시판 목록 조회 및 표시함수
+// 게시판 목록 조회 및 표시함수
 // 게시판 목록 불렀을 때, 로그인 버튼 눌렀을 때 실행
-//조회해서 ul 안에 li 추가되는 로직\
+// 조회해서 ul 안에 li 추가되는 로직\
 
-//요청 보내기 전에 AccessToken 빼오기
-//만약에 로컬 스토리지에 AccessToken 이 없으면 로그인 페이지로 전환
-//요청 보내기
-//fetch 에서 headers 안에 Authorizaiton: `Bearer ${AccessToken}`
+// 요청 보내기 전에 AccessToken 빼오기
+// 만약에 로컬 스토리지에 AccessToken 이 없으면 로그인 페이지로 전환
+// 요청 보내기
+// fetch 에서 headers 안에 Authorizaiton: `Bearer ${AccessToken}`
 
-//요청해서 받아온 게시물들 foreach => ul 안에 li로 넣기
-//li 는 제목만 표시되도록
+// 요청해서 받아온 게시물들 foreach => ul 안에 li로 넣기
+// li 는 제목만 표시되도록
 async function renderboard() {
   const token = localStorage.getItem("AccessToken"); //토큰 빼오기
 
@@ -391,3 +391,6 @@ signupForm.addEventListener("submit", signupHandler);
 signinForm.addEventListener("submit", signinHandler);
 
 writeForm.addEventListener("submit", addBoard);
+
+//목록으로 돌아가기 버튼 - 목록으로 -> renderboard 안에서 페이지 전환 정의해둠
+backBtn.addEventListener("click", renderboard);
