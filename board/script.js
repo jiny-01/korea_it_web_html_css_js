@@ -27,7 +27,8 @@ let boards = [];
 //게시판 게시물 추가
 const writeForm = document.querySelector("#write-form");
 
-//AccessToken 디코딩
+//======================================JWT 토큰 디코딩 함수===============================
+//AccessToken 디코딩- 게시물 추가 dto 에 유저id 필요하기 때문 -> jti 로 빼옴
 function getPayload() {
   const token = localStorage.getItem("AccessToken");
   if (!token) {
@@ -52,6 +53,7 @@ function getPayload() {
   }
 }
 
+//====================================페이지 전환 함수=======================================================
 //상단메뉴 버튼 4개 각각 클릭할 때 실행될 함수 - 페이지 전환 함수
 function changepages(pageElement) {
   const pages = document.querySelectorAll(".page"); //페이지 다 들고옴
@@ -62,7 +64,7 @@ function changepages(pageElement) {
   pageElement.classList.add("active"); //선택된 거에만 active
 }
 
-//게시판 조회 함수
+//=========================================게시판 조회 함수=========================================
 //게시판 목록 조회 및 표시함수
 // 게시판 목록 불렀을 때, 로그인 버튼 눌렀을 때 실행
 //조회해서 ul 안에 li??
@@ -111,8 +113,21 @@ async function renderboard() {
       boardList.innerHTML = "";
 
       boards.forEach((board) => {
-        boardList.innerHTML += `<li>${board.title}</li>`;
+        //li태그에 대한 요소를 만들어서 listItem 에 담음
+        const listItem = document.createElement("li");
+        listItem.innerText = board.title;
+
+        //각각 이벤트리스너 옵션(클릭 시 실행) 추가해줌
+        listItem.addEventListener("click", () => {
+          // console.log(board.boardId);
+          //게시물 상세 보기
+          getBoard(board.boardId);
+        });
+
+        //innerHTML 과 같은 역할 - li들을 ul 안에 넣음
+        boardList.appendChild(listItem);
       });
+
       changepages(pageBoard);
     }
   } catch (error) {
@@ -124,14 +139,101 @@ async function renderboard() {
   // console.log("게시물 목록:", boardList);
 }
 
-//=====================게시물 추가 함수==============================
+//===========================================게시물 추가 함수=======================================
 async function addBoard(event) {
   event.preventDefault(); //이벤트 막기
+
+  // 요청 보내기 전 필요한 데이터 가져오기
   const userInfo = await getPayload();
   console.log(userInfo);
+
+  //input 의 입력값 빼오기 - title, content 가져옴
+  //input.value 필요
+  const titleInput = document.querySelector("#write-title");
+  const contentInput = document.querySelector("#write-content");
+
+  //토큰은 로컬스토리지에 있음
+  const accessToken = localStorage.getItem("AccessToken");
+  //토큰은 전역으로 가져와도 되는지?????
+
+  //혹시모를 accessToken 이 없는 경우 -> 토큰 없을 땐 로그인 페이지로 전환
+  //백엔드 요청에 accessToken 이 필요하니까
+  if (!accessToken) {
+    alert("글을 작성하려면 로그인이 필요합니다.");
+    changepages(pageSignin);
+    return;
+  }
+
+  //항목에 빈값을 입력하거나 공백을 입력했을 경우
+  if (!titleInput.value.trim() || !contentInput.value.trim()) {
+    alert("모든 항목을 입력해주세요.");
+    return;
+  }
+
+  //요청을 위한 body 데이터 객체 만들기
+  //요청 dto 에 들어가는 데이터 그대로 보내기 위해 객체로 만듦
+  const boardData = {
+    title: titleInput.value,
+    content: contentInput.value,
+    userId: userInfo.jti,
+  };
+
+  //try 안에 contents type, header, token 넣어서 요청 보내기
+  //responsedata 로 ApiRespDto (status, message, data)
+  //data 안에 결과가 있음 -> 즉, responsedata.data
+  try {
+    //요청 보내기
+    //함수 자체가 비동기인데 동기처럼 하기 위해 await 해줘야함
+    //fetch(promise) 의 결과, 즉 요청 자체 -> response 변수에 저장
+    const response = await fetch(`${API_BASE_URL}/board/add`, {
+      method: "POST",
+      //CORS 막히는 것 방지 - 요청주소/포트 다름 or body 를 요청 시 보내야할 때
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      //넘겨줘야 하는 데이터를 body 안에 넣어줌
+      body: JSON.stringify(boardData), //객체를 json 문자열로 바꿈
+    });
+    //응답 데이터 빼오기(json 형태로)-백엔드 서버의 ApiRespDto 에서
+    const responseData = await response.json();
+
+    if (responseData.status !== "success") {
+      alert(responseData.message);
+    } else {
+      alert(responseData.message);
+      writeForm.reset();
+      await renderboard(); //ul 에 li 추가하는 렌더링 먼저-await 붙여
+      //                               changepages보다 먼저 실행되도록
+      changepages(pageBoard); //최종 - 게시물 목록으로 전환
+    }
+  } catch (error) {
+    console.log(error);
+    alert("게시물 등록 중 로류가 발생했습니다.");
+  }
 }
 
-//로그인 요청 함수
+//===================================게시물 상세 조회==================================
+async function getBoard(boardId) {
+  event.preventDefault(); //이벤트 막기
+
+  //토큰 가져오기
+  const accessToken = localStorage.getItem("AccessToken");
+
+  //데이터 담을 response
+  const response = await fetch(`${API_BASE_URL}/board/${boardId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  //백엔드의 ApiRespDto 의 데이터를 가져옴 -> js 형태로 
+  const responseData = await response.json();
+  console.log(responseData.data);
+}
+
+//===================================로그인 요청 함수======================================
 async function signinHandler(event) {
   event.preventDefault();
 
@@ -171,7 +273,7 @@ async function signinHandler(event) {
       localStorage.setItem("AccessToken", responseData.data); //토큰 로컬스토리지에 저장
       signinForm.reset(); //폼 초기화
 
-      //===========================게시판 목록으로 전환하기=====================================================================
+      //==================게시판 목록으로 전환하기=====================================================================
       //========================================================================================================
       await renderboard(); //ul안에 li 넣기 - 렌더링
       //페이지 바꾸기전 렌더링 먼저 -> await 사용
@@ -183,8 +285,9 @@ async function signinHandler(event) {
     alert("로그인 요청에 오류가 발생했습니다.");
   }
 }
+
 //Backend 연결
-//회원가입 요청함수
+//========================================회원가입 요청함수=========================================================
 async function signupHandler(event) {
   event.preventDefault(); //폼의 기본 동작을 막기 위해
 
@@ -235,26 +338,33 @@ async function signupHandler(event) {
     alert("회원가입 요청에 오류가 발생했습니다.");
   }
 }
+//---------------------------상단 버튼 이벤트리스너 옵션 추가----------------------------------------------------
 //버튼 눌러졌을 때 호출 - 4개 버튼 각각
 //클릭했을 때만 실행되야 하므로 익명함수로 함
+
+//로그인 
 navSignin.addEventListener("click", () => {
   changepages(pageSignin);
 });
 
+//회원가입
 navSignup.addEventListener("click", () => {
   changepages(pageSignup);
 });
 
+//게시판 => 게시물 조회
 navBoard.addEventListener(
   "click",
   renderboard
   // changepages(pageBoard);    위에 render 함수에 포함되어있음
 );
 
+//글쓰기
 navWrite.addEventListener("click", () => {
   console.log("글쓰기 클릭됨");
   changepages(pageWrite);
 });
+
 
 signupForm.addEventListener("submit", signupHandler);
 //jiny01, 1234 , allie7019@naver.com
