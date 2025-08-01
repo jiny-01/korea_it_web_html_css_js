@@ -134,3 +134,46 @@ textarea {
 
 }
 
+#page-detail {
+    /* background-color: bisque; */
+    text-align: left;
+
+}
+
+#page-detail > h2, p {
+    width: 100%;
+    max-width: 600px;
+    padding-left: 10px;
+
+}
+
+
+#detail-userid {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dbdbdb;
+    box-sizing: border-box;
+    
+}
+
+#detail-content {
+    min-height: 500px;
+    border-bottom: 1px solid #dbdbdb;
+    /* 내용과 버튼 사이 구분선 */
+    padding-bottom: 10px;
+}
+
+#back-btn {
+    border: none;
+    padding: 6px 15px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-start;
+    /* 자기자신을 기준으로, 왼쪽정렬 */
+    transition: all 0.3s ease;
+}
+
+#back-btn:hover {
+    background-color: #e2e6ea;
+}

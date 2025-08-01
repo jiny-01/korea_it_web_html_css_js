@@ -4,8 +4,10 @@ const API_BASE_URL = "http://localhost:8080";
 //요소들 가져오기
 const navSignin = document.querySelector("#nav-signin");
 const navSignup = document.querySelector("#nav-signup");
+const navLogout = document.querySelector("#nav-logout");
 const navBoard = document.querySelector("#nav-board");
 const navWrite = document.querySelector("#nav-write");
+console.dir(navSignin); //모든 dom 요소 확인 가능
 
 //페이지 요소 가져오기
 const pageSignin = document.querySelector("#page-signin");
@@ -245,7 +247,7 @@ async function getBoard(boardId) {
     //가져온 데이터를 요소에 추가해줌
     if (responseData.status === "success") {
       detailTitle.innerText = responseData.data.title;
-      detailUserId.innerHTML = responseData.data.userId;
+      detailUserId.innerHTML = `유저 ID : ${responseData.data.userId}`;
       detailContent.innerHTML = responseData.data.content;
       changepages(pageDetail);
     }
@@ -295,9 +297,10 @@ async function signinHandler(event) {
 
       //==================게시판 목록으로 전환하기=====================================================================
       //========================================================================================================
-      await renderboard(); //ul안에 li 넣기 - 렌더링
-      //페이지 바꾸기전 렌더링 먼저 -> await 사용
-      changepages(pageBoard);
+      // await renderboard(); //ul안에 li 넣기 - 렌더링
+      // //페이지 바꾸기전 렌더링 먼저 -> await 사용
+      // changepages(pageBoard);
+      location.reload();    //새로고침해서 로그아웃 버튼 나오게 하기 위함
     }
   } catch (error) {
     //요청 자체에 실패한 경우
@@ -372,6 +375,17 @@ navSignup.addEventListener("click", () => {
   changepages(pageSignup);
 });
 
+//로그아웃
+navLogout.addEventListener("click", () => {
+  if (confirm("정말 로그아웃 하시겠습니까?")) {
+    //"예" 선택할 경우 밑에 true 조건 따름
+    localStorage.removeItem("AccessToken"); //엑세스 토큰 삭제
+    location.reload(true); //새로고침 발생
+  } else {
+    return;
+  }
+});
+
 //게시판 => 게시물 조회
 navBoard.addEventListener(
   "click",
@@ -394,3 +408,19 @@ writeForm.addEventListener("submit", addBoard);
 
 //목록으로 돌아가기 버튼 - 목록으로 -> renderboard 안에서 페이지 전환 정의해둠
 backBtn.addEventListener("click", renderboard);
+
+//리로드 시 토큰 유무 확인
+// (O : 게시판 불러오기(renderboard), X: 로그인 페이지 (signinpage))
+// DOMContentLoaded : HTML 문서가 완전히 로드되고 파싱되었을 때
+document.addEventListener("DOMContentLoaded", async () => {
+  const accessToken = localStorage.getItem("AccessToken");
+
+  if (accessToken) {
+    navSignin.style.display = "none";   //버튼 가리기
+    navSignup.style.display = "none";
+    await renderboard();
+  } else {
+    navLogout.style.display = "none";
+    changepages(pageSignin);
+  }
+});
