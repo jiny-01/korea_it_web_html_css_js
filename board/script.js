@@ -434,6 +434,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await renderboard();
   } else {
     navLogout.style.display = "none";
+    changeInfo.style.display = "none";
     changepages(pageSignin);
   }
 });
@@ -449,21 +450,29 @@ changeInfo.addEventListener("click", () => {
 //새로운 비밀번호 입력은 두번 받아서 두개의 값이 같은지 확인 후 요청 처리
 //비밀번호가 변경되면 로그아웃 처리, 로그아웃 페이지로 전환
 
-//============================추가: 비밀번호 변경========================
+//============================추가: 비밀번호 변경===========================
 changeInfoForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   // 요청 보내기 전 필요한 데이터 - userId 가져오기
   const userInfo = await getPayload();
-  const userId = userInfo.jti;
-
+  
   // 입력값 가져오기
+  const userId = userInfo.jti;
   const oldPassword = document.querySelector("#changepw-old").value;
   const newPassword = document.querySelector("#changepw-new").value;
   const confirmPassword = document.querySelector("#changepw-confirm").value;
 
   //요청 보내려면 토큰 필요
-  const accessToken = localStorage.getItem("AccessToken"); //
+  const accessToken = localStorage.getItem("AccessToken"); //토큰 빼오기
+
+  // //로그인되어 있을 때에만 변경페이지 보이도록
+  // if (accessToken) {
+  //   changepages(pagechangepw);
+  // } else {
+  //   alert("로그인 후 이용 가능합니다.");
+  //   changepages(pageSignin);
+  // }
 
   if (!userId || !oldPassword || !newPassword) {
     alert("모든 항목을 입력하세요.");

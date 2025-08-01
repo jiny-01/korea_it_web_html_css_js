@@ -182,7 +182,8 @@ textarea {
 /* ----------------------비밀번호 변경 페이지----------------------------- */
 
 #page-changepw {
-
+    /* background-color: bisque; */
+    text-align: left;
 }
 
 #page-changepw > h2 {
