@@ -134,6 +134,7 @@ textarea {
 
 }
 
+/* ----------------------------게시물 상세보기---------------------------------- */
 #page-detail {
     /* background-color: bisque; */
     text-align: left;
@@ -176,4 +177,17 @@ textarea {
 
 #back-btn:hover {
     background-color: #e2e6ea;
+}
+
+/* ----------------------비밀번호 변경 페이지----------------------------- */
+
+#page-changepw {
+
+}
+
+#page-changepw > h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 24px;
 }

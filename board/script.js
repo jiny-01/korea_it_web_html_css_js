@@ -7,6 +7,8 @@ const navSignup = document.querySelector("#nav-signup");
 const navLogout = document.querySelector("#nav-logout");
 const navBoard = document.querySelector("#nav-board");
 const navWrite = document.querySelector("#nav-write");
+const changeInfo = document.querySelector("#nav-changeInfo");
+
 console.dir(navSignin); //모든 dom 요소 확인 가능
 
 //페이지 요소 가져오기
@@ -15,11 +17,19 @@ const pageSignup = document.querySelector("#page-signup");
 const pageBoard = document.querySelector("#page-board");
 const pageWrite = document.querySelector("#page-write");
 const pageDetail = document.querySelector("#page-detail");
+const pagechangepw = document.querySelector("#page-changepw");
 
 //로그인 및 회원가입 폼
 //signup 폼 가져오기
 const signupForm = document.querySelector("#signup-form");
 const signinForm = document.querySelector("#signin-form");
+
+//비밀번호 변경
+const changeInfoForm = document.querySelector("#changepw-form");
+const userId = document.querySelector("#changepw-userid");
+const oldPassword = document.querySelector("#changepw-old");
+const newPassword = document.querySelector("#changepw-new");
+const confirmPassword = document.querySelector("#changepw-confirm");
 
 //게시판 목록
 const boardList = document.querySelector("#board-list");
@@ -300,7 +310,7 @@ async function signinHandler(event) {
       // await renderboard(); //ul안에 li 넣기 - 렌더링
       // //페이지 바꾸기전 렌더링 먼저 -> await 사용
       // changepages(pageBoard);
-      location.reload();    //새로고침해서 로그아웃 버튼 나오게 하기 위함
+      location.reload(); //새로고침해서 로그아웃 버튼 나오게 하기 위함
     }
   } catch (error) {
     //요청 자체에 실패한 경우
@@ -399,11 +409,14 @@ navWrite.addEventListener("click", () => {
   changepages(pageWrite);
 });
 
+//회원가입
 signupForm.addEventListener("submit", signupHandler);
 //jiny01, 1234 , allie7019@naver.com
 
+//로그인
 signinForm.addEventListener("submit", signinHandler);
 
+//글쓰기 - 게시물 작성
 writeForm.addEventListener("submit", addBoard);
 
 //목록으로 돌아가기 버튼 - 목록으로 -> renderboard 안에서 페이지 전환 정의해둠
@@ -416,7 +429,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const accessToken = localStorage.getItem("AccessToken");
 
   if (accessToken) {
-    navSignin.style.display = "none";   //버튼 가리기
+    navSignin.style.display = "none"; //버튼 가리기
     navSignup.style.display = "none";
     await renderboard();
   } else {
@@ -424,3 +437,77 @@ document.addEventListener("DOMContentLoaded", async () => {
     changepages(pageSignin);
   }
 });
+
+changeInfo.addEventListener("click", () => {
+  changepages(pagechangepw);
+});
+
+//아이디, 기존 PW, 새 PW, 토큰
+//메뉴버튼 만들고 엑세스 토큰에 따라서 보이고 안보이고 처리
+//요청 보낼 때 userId, oldPW, newPw body 로 요청, 보내기
+//accessToken 도 같이 헤더에
+//새로운 비밀번호 입력은 두번 받아서 두개의 값이 같은지 확인 후 요청 처리
+//비밀번호가 변경되면 로그아웃 처리, 로그아웃 페이지로 전환
+
+//============================추가: 비밀번호 변경========================
+changeInfoForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  // 요청 보내기 전 필요한 데이터 - userId 가져오기
+  const userInfo = await getPayload();
+  const userId = userInfo.jti;
+
+  // 입력값 가져오기
+  const oldPassword = document.querySelector("#changepw-old").value;
+  const newPassword = document.querySelector("#changepw-new").value;
+  const confirmPassword = document.querySelector("#changepw-confirm").value;
+
+  //요청 보내려면 토큰 필요
+  const accessToken = localStorage.getItem("AccessToken"); //
+
+  if (!userId || !oldPassword || !newPassword) {
+    alert("모든 항목을 입력하세요.");
+    return;
+  }
+
+  //비밀번호 2번 입력값 같은지 확인
+  if (newPassword !== confirmPassword) {
+    //2개의 입력값이 다를 경우
+    alert("새 비밀번호가 일치하지 않습니다.");
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/account/change/password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        userId,
+        oldPassword,
+        newPassword,
+        confirmPassword,
+      }),
+    });
+    //responseData 안에 요청 응답결과 가져옴 (status, message, data)
+    const responseData = await response.json();
+
+    if (responseData.status !== "success") {
+      alert(`비밀번호 변경 실패: ${responseData.message}`);
+      return;
+    }
+
+    alert("비밀번호 변경 성공");
+    localStorage.removeItem("AccessToken");  //로그아웃
+    changepages(pageSignin);  //다시 로그인 페이지로
+  } catch (error) {
+    alert("에러 발생: " + error.message);
+  }
+})
+
+
+
+
+
