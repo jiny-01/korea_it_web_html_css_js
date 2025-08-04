@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <!-- 전체 -->
@@ -27,31 +26,51 @@
       <main>
         <!-- 로그인 -->
         <div id="page-signin" class="page">
-            <h2>로그인</h2>
-            <form id="signin-form">   
-                <input type="text" id="signin-id" placeholder="아이디" />
-                <input type="password" id="signin-password" placeholder="비밀번호" />
-                <button type="submit" class="btn-submit">로그인</button>
-            </form>
-        </div>        
+          <h2>로그인</h2>
+          <form id="signin-form">
+            <input type="text" id="signin-id" placeholder="아이디" />
+            <input
+              type="password"
+              id="signin-password"
+              placeholder="비밀번호"
+            />
+            <button type="submit" class="btn-submit">로그인</button>
+          </form>
+        </div>
         <!-- 회원가입 -->
         <div id="page-signup" class="page">
-            <h2>회원가입</h2>
-            <form id="signup-form">   
-                <input type="text" id="signup-id" placeholder="사용할 아이디" />
-                <input type="password" id="signup-password" placeholder="비밀번호" />
-                <input type="email" id="signup-email" placeholder="사용할 이메일" />
-                <button type="submit" class="btn-submit">회원가입</button>
-            </form>
+          <h2>회원가입</h2>
+          <form id="signup-form">
+            <input type="text" id="signup-id" placeholder="사용할 아이디" />
+            <input
+              type="password"
+              id="signup-password"
+              placeholder="비밀번호"
+            />
+            <input type="email" id="signup-email" placeholder="사용할 이메일" />
+            <button type="submit" class="btn-submit">회원가입</button>
+          </form>
         </div>
         <!-- 정보 변경 : 비밀번호 변경 -->
         <div id="page-changepw" class="page">
           <h2>비밀번호 변경</h2>
           <form id="changepw-form">
             <input type="text" id="changepw-userid" placeholder="아이디" />
-            <input type="password" id="changepw-old" placeholder="기존 비밀번호" />
-            <input type="password" id="changepw-new" placeholder="새 비밀번호" />
-            <input type="password" id="changepw-confirm" placeholder="새 비밀번호 확인" />
+            <input
+              type="password"
+              id="changepw-old"
+              placeholder="기존 비밀번호"
+            />
+            <input
+              type="password"
+              id="changepw-new"
+              placeholder="새 비밀번호"
+            />
+            <input
+              type="password"
+              id="changepw-confirm"
+              placeholder="새 비밀번호 확인"
+            />
             <button type="submit" class="btn-submit">비밀번호 변경하기</button>
           </form>
         </div>
@@ -67,18 +86,26 @@
           <p id="detail-content">내용이 들어갈 자리</p>
           <!-- 수정, 삭제 / 목록으로 돌아가기 버튼 -->
           <div id="btn-container">
-              <button id="back-btn">목록으로</button>
+            <button id="back-btn">목록으로</button>
             <div id="btn-box">
               <button id="edit-btn" class="commonBtn">수정</button>
               <button id="delete-btn" class="commonBtn">삭제</button>
             </div>
+          </div>
         </div>
         <!-- 게시판 글쓰기 -->
-        <div id="page-write" class="page">
+        <div id="page-write" class="page active">
           <h2>새 글 작성</h2>
           <form id="write-form">
-            <input type="text" id="write-title" placeholder="제목을 입력하세요" />
-            <textarea id="write-content" placeholder="내용을 입력하세요" ></textarea>
+            <input
+              type="text"
+              id="write-title"
+              placeholder="제목을 입력하세요"
+            />
+            <textarea
+              id="write-content"
+              placeholder="내용을 입력하세요"
+            ></textarea>
             <button type="submit" class="btn-submit">작성 완료</button>
           </form>
         </div>
@@ -86,5 +113,4 @@
     </div>
     <script src="script.js"></script>
   </body>
-  
 </html>

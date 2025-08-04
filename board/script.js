@@ -47,7 +47,7 @@ const detailContent = document.querySelector("#detail-content");
 const backBtn = document.querySelector("#back-btn");
 const deleteBtn = document.querySelector("#delete-btn");
 const editBtn = document.querySelector("#edit-btn");
-
+const btnBox = document.querySelector("#btn-box");
 
 //======================================JWT 토큰 디코딩 함수===============================
 //AccessToken 디코딩- 게시물 추가 dto 에 유저id 필요하기 때문 -> jti 로 빼옴
@@ -83,6 +83,7 @@ function changepages(pageElement) {
     //일단 전부 active 제거
     page.classList.remove("active");
   });
+  console.dir(pageElement);
   pageElement.classList.add("active"); //선택된 거에만 active
 }
 
@@ -158,16 +159,43 @@ async function renderboard() {
   // console.log("게시물 목록:", boardList);
 }
 
-//===============================게시물 삭제 요청 함수
+//===============================게시물 삭제 요청 함수==============================
 async function removeBoard() {
-  console.dir(deleteBtn.dataset.boardId)
+  console.dir(deleteBtn.dataset.boardId);
+
+  const boardId = deleteBtn.dataset.boardId; //삭제할 게시물의 boardId
+
+  const accessToken = localStorage.getItem("AccessToken"); //토큰 가져옴
+  //토큰 유무 유효성 검사
+  if (!accessToken) {
+    alert("삭제하려면 로그인이 필요합니다.");
+    changepages(pageSignin);
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/board/remove/${boardId}`, {
+      method: "POST", //요청 메소드 : POST
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.status !== "success") {
+      alert(responseData.message);
+    } else {
+      alert(responseData.message);
+    }
+
+    await renderboard(); //게시물 목록 새로고침  => 새로고침 먼저 되도록 await
+    changepages(pageBoard); //게시물 페이지로 돌아감
+  } catch (error) {
+    console.log(error);
+    alert("삭제 요청을 보내는 중에 문제가 발생했습니다.");
+  }
 }
-
-
-
-
-
-
 
 //===========================================게시물 추가 함수=======================================
 async function addBoard(event) {
@@ -245,10 +273,14 @@ async function addBoard(event) {
 
 //========================================게시물 상세 조회==================================
 async function getBoard(boardId) {
-  event.preventDefault(); //이벤트 막기
+  btnBox.classList.remove("active");
 
   //토큰 가져오기
   const accessToken = localStorage.getItem("AccessToken");
+
+  //토큰의 유저아이디와 로그인한 유저아이디 비교
+  const userInfo = getPayload(accessToken);
+  const userId = parseInt(userInfo.jti);
 
   if (!accessToken) {
     alert("게시물을 조회하려면 로그인이 필요합니다.");
@@ -274,9 +306,16 @@ async function getBoard(boardId) {
       detailUserId.innerHTML = `유저 ID : ${responseData.data.userId}`;
       detailContent.innerHTML = responseData.data.content;
       // 게시물 삭제 속성 추가 - 데이터셋 아이디 부여
-      deleteBtn.setAttribute("data-board-id", responseData.data.boardId)
+      deleteBtn.setAttribute("data-board-id", responseData.data.boardId);
+
+      //
+
+      if (responseData.data.userId == userId) {
+        btnBox.classList.add("active");
+      }
       changepages(pageDetail);
     }
+
     console.log(responseData.data);
   } catch (error) {}
 }
@@ -422,6 +461,7 @@ navBoard.addEventListener(
 //글쓰기
 navWrite.addEventListener("click", () => {
   console.log("글쓰기 클릭됨");
+  console.log(pageWrite);
   changepages(pageWrite);
 });
 
@@ -439,7 +479,7 @@ writeForm.addEventListener("submit", addBoard);
 backBtn.addEventListener("click", renderboard);
 
 //게시물 상세보기 - 삭제 버튼
- deleteBtn.addEventListener("click", removeBoard);
+deleteBtn.addEventListener("click", removeBoard);
 
 //리로드 시 토큰 유무 확인
 // (O : 게시판 불러오기(renderboard), X: 로그인 페이지 (signinpage))
@@ -475,7 +515,7 @@ changeInfoForm.addEventListener("submit", async (event) => {
 
   // 요청 보내기 전 필요한 데이터 - userId 가져오기
   const userInfo = await getPayload();
-  
+
   // 입력값 가져오기
   const userId = userInfo.jti;
   const oldPassword = document.querySelector("#changepw-old").value;
@@ -528,14 +568,9 @@ changeInfoForm.addEventListener("submit", async (event) => {
     }
 
     alert("비밀번호 변경 성공");
-    localStorage.removeItem("AccessToken");  //로그아웃
-    changepages(pageSignin);  //다시 로그인 페이지로
+    localStorage.removeItem("AccessToken"); //로그아웃
+    changepages(pageSignin); //다시 로그인 페이지로
   } catch (error) {
     alert("에러 발생: " + error.message);
   }
-})
-
-
-
-
-
+});

@@ -1,13 +1,12 @@
 body {
-    margin: 0;
-    background-color: white;
+  margin: 0;
+  background-color: white;
 }
 
 .container {
-    margin: 0;
-    min-height: 100vh;
-    background-color: white;
-    
+  margin: 0;
+  min-height: 100vh;
+  background-color: white;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -19,202 +18,197 @@ body {
 
 /* ==============================header 부분====================== */
 header {
-    display: flex;
-    justify-content: flex-start;   
-    /* 왼쪽으로 치우치게 */
-    align-items: center;
-    background-color: #007bff;
+  display: flex;
+  justify-content: flex-start;
+  /* 왼쪽으로 치우치게 */
+  align-items: center;
+  background-color: #007bff;
 }
 
 nav {
-    padding: 0;
-    margin: 0;
-    display: flex;
-
+  padding: 0;
+  margin: 0;
+  display: flex;
 }
 
 nav > button {
-    border: none;
-    padding: 15px 30px;
-    background-color: transparent;
-    /* 부모와 같게 - 투명하게 */
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  border: none;
+  padding: 15px 30px;
+  background-color: transparent;
+  /* 부모와 같게 - 투명하게 */
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 nav > button:hover {
-    background-color: white;
-    color: black;
+  background-color: white;
+  color: black;
 }
 
 /* -=================================main 부분 ==========================*/
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    /* 연두색 부분  */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  /* 연두색 부분  */
 }
 .page {
-    display: none;
-    flex-direction: column;
-    /* 세로 정렬 */
-    align-items: center;
-    /* 수평 중앙 */
-    min-width: 700px;
-    
-}
-
-/* 페이지 바꿀 때 기능 */
-.active {
-    display: flex;
+  display: none;
+  flex-direction: column;
+  /* 세로 정렬 */
+  align-items: center;
+  /* 수평 중앙 */
+  min-width: 700px;
 }
 
 /* =================각각 페이지 요소들 스타일=============================== */
 h2 {
-    color: #333333;
+  color: #333333;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
 }
 
-input, textarea{
-    padding: 10px;
-    /* 안쪽 여백 줘서 크기 조절 */
-    border: 1px solid #dbdbdb;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    /* 아이디-비번 사이 간격, 비번-버튼 사이 간격 띄우기 */
+input,
+textarea {
+  padding: 10px;
+  /* 안쪽 여백 줘서 크기 조절 */
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  /* 아이디-비번 사이 간격, 비번-버튼 사이 간격 띄우기 */
 }
 
 textarea {
-    height: 150px;
-    
-
+  height: 150px;
 }
 
 .btn-submit {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .btn-submit:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 /* 게시물 목록 스타일 */
 #board-list {
-    width: 100%;
-    max-width: 700px;
-    list-style: none;
-    padding: 0;
+  width: 100%;
+  max-width: 700px;
+  list-style: none;
+  padding: 0;
 }
 
 #board-list > li {
-    padding: 15px;
-    border: 1px solid #dddddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  padding: 15px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 #board-list > li:hover {
-    background-color: #f9f9f9;
-
+  background-color: #f9f9f9;
 }
 
 /* ----------------------------게시물 상세보기---------------------------------- */
 #page-detail {
-    /* background-color: bisque; */
-    text-align: left;
-
+  /* background-color: bisque; */
+  text-align: left;
 }
 
-#page-detail > h2, p {
-    width: 100%;
-    max-width: 600px;
-    padding-left: 10px;
-
+#page-detail > h2,
+p {
+  width: 100%;
+  max-width: 600px;
+  padding-left: 10px;
 }
-
 
 #detail-userid {
-    margin: 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #dbdbdb;
-    box-sizing: border-box;
-    
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dbdbdb;
+  box-sizing: border-box;
 }
 
 #detail-content {
-    min-height: 500px;
-    border-bottom: 1px solid #dbdbdb;
-    /* 내용과 버튼 사이 구분선 */
-    padding-bottom: 10px;
+  min-height: 500px;
+  border-bottom: 1px solid #dbdbdb;
+  /* 내용과 버튼 사이 구분선 */
+  padding-bottom: 10px;
 }
 
 #back-btn {
-    border: none;
-    padding: 6px 15px;
-    font-size: 1em;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: flex-start;
-    /* 자기자신을 기준으로, 왼쪽정렬 */
-    transition: all 0.3s ease;
+  border: none;
+  padding: 6px 15px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-start;
+  /* 자기자신을 기준으로, 왼쪽정렬 */
+  transition: all 0.3s ease;
 }
 
 #back-btn:hover {
-    background-color: #e2e6ea;
+  background-color: #e2e6ea;
 }
 
 #btn-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#btn-box {
+  display: none;
+  gap: 5px;
 }
 
 .commonBtn {
-    border: none;
-    padding: 6px 15px;
-    font-size: 1em;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  border: none;
+  padding: 6px 15px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .commonBtn:nth-of-type(1) {
-    background-color: #0057e7;
+  background-color: #0057e7;
 }
 
 .commonBtn:nth-of-type(1):hover {
-    background-color: #0042ad
+  background-color: #0042ad;
 }
 .commonBtn:nth-of-type(2) {
-    background-color: #cc3300;
+  background-color: #cc3300;
 }
 .commonBtn:nth-of-type(2):hover {
-    background-color: #aa2b00;
+  background-color: #aa2b00;
 }
 
-
+.active {
+  display: flex !important;
+}
 
 /* ----------------------비밀번호 변경 페이지----------------------------- */
 
 #page-changepw {
-    /* background-color: bisque; */
-    text-align: left;
+  /* background-color: bisque; */
+  text-align: left;
 }
 
 #page-changepw > h2 {
@@ -226,5 +220,5 @@ textarea {
 
 /* 버튼 마우스 올렸을 때 움직이도록 */
 nav > button:hover {
-    transform: translateY(-4px);
+  transform: translateY(-4px);
 }
