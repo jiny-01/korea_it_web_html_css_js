@@ -8,6 +8,7 @@ const navLogout = document.querySelector("#nav-logout");
 const navBoard = document.querySelector("#nav-board");
 const navWrite = document.querySelector("#nav-write");
 const changeInfo = document.querySelector("#nav-changeInfo");
+const navEdit = document.querySelector("#page-edit");
 
 console.dir(navSignin); //모든 dom 요소 확인 가능
 
@@ -18,6 +19,7 @@ const pageBoard = document.querySelector("#page-board");
 const pageWrite = document.querySelector("#page-write");
 const pageDetail = document.querySelector("#page-detail");
 const pagechangepw = document.querySelector("#page-changepw");
+const pageEdit = document.querySelector("#page-edit");
 
 //로그인 및 회원가입 폼
 //signup 폼 가져오기
@@ -48,6 +50,9 @@ const backBtn = document.querySelector("#back-btn");
 const deleteBtn = document.querySelector("#delete-btn");
 const editBtn = document.querySelector("#edit-btn");
 const btnBox = document.querySelector("#btn-box");
+
+//게시물 수정 요소
+const editForm = document.querySelector("#edit-form");
 
 //======================================JWT 토큰 디코딩 함수===============================
 //AccessToken 디코딩- 게시물 추가 dto 에 유저id 필요하기 때문 -> jti 로 빼옴
@@ -160,8 +165,11 @@ async function renderboard() {
 }
 
 //================================게시물 수정 함수===============================
+
+
 async function updateBoard() {
   event.preventDefault();
+  changepages(editPage)
 
   const accessToken = localStorage.getItem("AccessToken");
   if (!accessToken) {
@@ -176,7 +184,6 @@ async function updateBoard() {
   //수정할 input 에 넣음
   //수정하고 update 요청 날림
   //
-
 }
 //===============================게시물 삭제 요청 함수==============================
 async function removeBoard() {
@@ -477,6 +484,8 @@ navBoard.addEventListener(
   // changepages(pageBoard);    위에 render 함수에 포함되어있음
 );
 
+navEdit.addEventListener("click", updateBoard)
+
 //글쓰기
 navWrite.addEventListener("click", () => {
   console.log("글쓰기 클릭됨");
@@ -499,6 +508,9 @@ backBtn.addEventListener("click", renderboard);
 
 //게시물 상세보기 - 삭제 버튼
 deleteBtn.addEventListener("click", removeBoard);
+
+//게시물 상세보기 - 수정 버튼
+editBtn.addEventListener("click", updateBoard)
 
 //리로드 시 토큰 유무 확인
 // (O : 게시판 불러오기(renderboard), X: 로그인 페이지 (signinpage))
