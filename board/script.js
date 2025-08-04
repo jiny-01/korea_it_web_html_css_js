@@ -159,6 +159,25 @@ async function renderboard() {
   // console.log("게시물 목록:", boardList);
 }
 
+//================================게시물 수정 함수===============================
+async function updateBoard() {
+  event.preventDefault();
+
+  const accessToken = localStorage.getItem("AccessToken");
+  if (!accessToken) {
+    alert("로그인이 필요합니다.");
+    changepages(pageSignin);
+    return;
+  }
+
+  //수정누름 - 아이디를 데이터셋에 넘겨서 아이디 불러옴 - 보드 아이디 알 수 있음
+  //수정 폼 형태를 띄움 - 글쓰기 형태랑 같음(div)
+  //상세조회를 먼저 1번 함 - 원래 글 내용이 있음
+  //수정할 input 에 넣음
+  //수정하고 update 요청 날림
+  //
+
+}
 //===============================게시물 삭제 요청 함수==============================
 async function removeBoard() {
   console.dir(deleteBtn.dataset.boardId);
