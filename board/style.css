@@ -179,6 +179,37 @@ textarea {
     background-color: #e2e6ea;
 }
 
+#btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.commonBtn {
+    border: none;
+    padding: 6px 15px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.commonBtn:nth-of-type(1) {
+    background-color: #0057e7;
+}
+
+.commonBtn:nth-of-type(1):hover {
+    background-color: #0042ad
+}
+.commonBtn:nth-of-type(2) {
+    background-color: #cc3300;
+}
+.commonBtn:nth-of-type(2):hover {
+    background-color: #aa2b00;
+}
+
+
+
 /* ----------------------비밀번호 변경 페이지----------------------------- */
 
 #page-changepw {
@@ -191,4 +222,9 @@ textarea {
   margin-bottom: 25px;
   color: #333;
   font-size: 24px;
+}
+
+/* 버튼 마우스 올렸을 때 움직이도록 */
+nav > button:hover {
+    transform: translateY(-4px);
 }

@@ -45,6 +45,9 @@ const detailTitle = document.querySelector("#detail-title");
 const detailUserId = document.querySelector("#detail-userid");
 const detailContent = document.querySelector("#detail-content");
 const backBtn = document.querySelector("#back-btn");
+const deleteBtn = document.querySelector("#delete-btn");
+const editBtn = document.querySelector("#edit-btn");
+
 
 //======================================JWT 토큰 디코딩 함수===============================
 //AccessToken 디코딩- 게시물 추가 dto 에 유저id 필요하기 때문 -> jti 로 빼옴
@@ -155,6 +158,17 @@ async function renderboard() {
   // console.log("게시물 목록:", boardList);
 }
 
+//===============================게시물 삭제 요청 함수
+async function removeBoard() {
+  console.dir(deleteBtn.dataset.boardId)
+}
+
+
+
+
+
+
+
 //===========================================게시물 추가 함수=======================================
 async function addBoard(event) {
   event.preventDefault(); //이벤트 막기
@@ -259,6 +273,8 @@ async function getBoard(boardId) {
       detailTitle.innerText = responseData.data.title;
       detailUserId.innerHTML = `유저 ID : ${responseData.data.userId}`;
       detailContent.innerHTML = responseData.data.content;
+      // 게시물 삭제 속성 추가 - 데이터셋 아이디 부여
+      deleteBtn.setAttribute("data-board-id", responseData.data.boardId)
       changepages(pageDetail);
     }
     console.log(responseData.data);
@@ -421,6 +437,9 @@ writeForm.addEventListener("submit", addBoard);
 
 //목록으로 돌아가기 버튼 - 목록으로 -> renderboard 안에서 페이지 전환 정의해둠
 backBtn.addEventListener("click", renderboard);
+
+//게시물 상세보기 - 삭제 버튼
+ deleteBtn.addEventListener("click", removeBoard);
 
 //리로드 시 토큰 유무 확인
 // (O : 게시판 불러오기(renderboard), X: 로그인 페이지 (signinpage))
