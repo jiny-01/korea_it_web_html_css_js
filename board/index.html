@@ -88,7 +88,7 @@
           <div id="btn-container">
             <button id="back-btn">목록으로</button>
             <div id="btn-box">
-              <button id="edit-btn" class="commonBtn">수정</button>
+              <button id="update-btn" class="commonBtn">수정</button>
               <button id="delete-btn" class="commonBtn">삭제</button>
             </div>
           </div>
@@ -110,19 +110,20 @@
           </form>
         </div>
         <!-- 게시판 수정하기 버튼 눌렀을 때 띄울 페이지 -->
-         <div id="page-edit" class="page">
-            <form id="edit-form">
+         <div id="page-update" class="page">
+            <h2>수정하기</h2>
+            <form id="update-form">
             <input
               type="text"
-              id="edit-title"
+              id="update-title"
               placeholder="수정할 제목을 입력하세요"
             />
             <textarea
-              id="edit-content"
+              id="update-content"
               placeholder="수정할 내용을 입력하세요"
             ></textarea>
             <button type="submit" class="btn-submit">수정 완료</button>
-          </form>
+            </form>
          </div>
       </main>
     </div>

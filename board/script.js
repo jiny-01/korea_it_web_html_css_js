@@ -19,7 +19,7 @@ const pageBoard = document.querySelector("#page-board");
 const pageWrite = document.querySelector("#page-write");
 const pageDetail = document.querySelector("#page-detail");
 const pagechangepw = document.querySelector("#page-changepw");
-const pageEdit = document.querySelector("#page-edit");
+const pageUpdate = document.querySelector("#page-update");
 
 //로그인 및 회원가입 폼
 //signup 폼 가져오기
@@ -48,11 +48,13 @@ const detailUserId = document.querySelector("#detail-userid");
 const detailContent = document.querySelector("#detail-content");
 const backBtn = document.querySelector("#back-btn");
 const deleteBtn = document.querySelector("#delete-btn");
-const editBtn = document.querySelector("#edit-btn");
+const updateBtn = document.querySelector("#update-btn");
 const btnBox = document.querySelector("#btn-box");
 
 //게시물 수정 요소
-const editForm = document.querySelector("#edit-form");
+const updateForm = document.querySelector("#update-form");
+const updateTitleInput = document.querySelector("#update-title");
+const updateContentInput = document.querySelector("#update-content");
 
 //======================================JWT 토큰 디코딩 함수===============================
 //AccessToken 디코딩- 게시물 추가 dto 에 유저id 필요하기 때문 -> jti 로 빼옴
@@ -166,25 +168,138 @@ async function renderboard() {
 
 //================================게시물 수정 함수===============================
 
-
 async function updateBoard() {
-  event.preventDefault();
-  changepages(editPage)
+  // event.preventDefault();
+  changepages(pageUpdate);
 
   const accessToken = localStorage.getItem("AccessToken");
+
+  const boardId = updateBtn.dataset.boardId;
+  console.log(boardId);
+
   if (!accessToken) {
-    alert("로그인이 필요합니다.");
-    changepages(pageSignin);
+    alert("게시물을 조회하려면 로그인이 필요합니다.");
+    changePages(pageSignin);
     return;
   }
 
-  //수정누름 - 아이디를 데이터셋에 넘겨서 아이디 불러옴 - 보드 아이디 알 수 있음
-  //수정 폼 형태를 띄움 - 글쓰기 형태랑 같음(div)
-  //상세조회를 먼저 1번 함 - 원래 글 내용이 있음
-  //수정할 input 에 넣음
-  //수정하고 update 요청 날림
-  //
+  try {
+    const response = await fetch(`${API_BASE_URL}/board/${boardId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.status === "success") {
+      console.log(responseData.data);
+      updateTitleInput.value = responseData.data.title;
+      updateContentInput.value = responseData.data.content;
+      changepages(pageUpdate);
+    }
+  } catch (error) {
+    changepages(pageUpdate);
+  }
 }
+
+//===========================게시물 수정 요청 보내는 함수=========================
+async function update(event) {
+  event.preventDefault();
+
+  const accessToken = localStorage.getItem("AccessToken");
+
+  const boardId = updateBtn.dataset.boardId;
+  console.log(boardId);
+
+  if (!accessToken) {
+    alert("게시물을 조회하려면 로그인이 필요합니다.");
+    changePages(pageSignin);
+    return;
+  }
+
+  const updateData = {
+    boardId: boardId,
+    title: updateTitleInput.value,
+    content: updateContentInput.value,
+  };
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/board/update`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateData),
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.status !== "success") {
+      alert(responseData.message);
+      console.log(responseData.message)
+      await renderboard();
+      changepages(pageBoard);
+    } else {
+      alert(responseData.message);
+      console.log(responseData.message)
+      renderboard();
+      changepages(pageBoard);
+    }
+  } catch (error) {}
+}
+//요청 보내기
+// try {
+//   const response = await fetch(`${API_BASE_URL}board/${boardId}`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${accessToken}`,
+//     },
+//     body: JSON.stringify({
+//       title,
+//       content,
+//     }),
+//   });
+
+//   const responseData = await response.json();
+//   console.log(responseData.data);
+//   if (responseData.status === "success") {
+//     console.log(responseData.message);
+
+// //수정할 게시물Id, 제목, 내용 가져오기
+// const boardId = editForm.dataset.boardId;
+// const titleInput = document.querySelector("#edit-title").value.trim();
+// const contentInput = document.querySelector("#edit-content").value.trim();
+
+//     // 수정 폼에 기존 데이터 넣기
+//     const data = responseData.data;
+//     const boardId = updateForm.dataset.boardId;
+//     document.querySelector("#update-title").value.trim() = data.title;
+//     document.querySelector("#update-content").value.trim() = data.content;
+
+//     alert("게시물이 성공적으로 수정되었습니다.");
+//   } else {
+//     alert("게시물 수정 중 오류 발생");
+//   }
+
+//   await renderboard(); //게시물 목록 새로고침
+//   changepages(pageBoard); //다시 게시물 목록 페이지로
+// } catch (error) {
+//   console.log("에러발생");
+// }
+
+//수정누름 - 아이디를 데이터셋에 넘겨서 아이디 불러옴 - 보드 아이디, 원래 있던 내용 가져옴
+//수정 폼 형태를 띄움 - 글쓰기 형태랑 같음(div)
+//수정 페이지로 바뀔 때 상세요청 날려서
+//원래 있던 내용을 input 과 textarea 에 넣기
+//상세조회를 먼저 1번 함 - 원래 글 내용이 있음
+//수정할 input 에 넣음
+//수정하고 update 요청 날림
+//수정 후 밑에 수정하기 버튼을 통해 수정 요청 날리고 목록으로 페이지 전환
+
 //===============================게시물 삭제 요청 함수==============================
 async function removeBoard() {
   console.dir(deleteBtn.dataset.boardId);
@@ -333,6 +448,7 @@ async function getBoard(boardId) {
       detailContent.innerHTML = responseData.data.content;
       // 게시물 삭제 속성 추가 - 데이터셋 아이디 부여
       deleteBtn.setAttribute("data-board-id", responseData.data.boardId);
+      updateBtn.setAttribute("data-board-id", responseData.data.boardId);
 
       //
 
@@ -484,7 +600,7 @@ navBoard.addEventListener(
   // changepages(pageBoard);    위에 render 함수에 포함되어있음
 );
 
-navEdit.addEventListener("click", updateBoard)
+// navEdit.addEventListener("click", updateBoard);
 
 //글쓰기
 navWrite.addEventListener("click", () => {
@@ -503,6 +619,8 @@ signinForm.addEventListener("submit", signinHandler);
 //글쓰기 - 게시물 작성
 writeForm.addEventListener("submit", addBoard);
 
+updateForm.addEventListener("submit", update);
+
 //목록으로 돌아가기 버튼 - 목록으로 -> renderboard 안에서 페이지 전환 정의해둠
 backBtn.addEventListener("click", renderboard);
 
@@ -510,7 +628,15 @@ backBtn.addEventListener("click", renderboard);
 deleteBtn.addEventListener("click", removeBoard);
 
 //게시물 상세보기 - 수정 버튼
-editBtn.addEventListener("click", updateBoard)
+updateBtn.addEventListener("click", updateBoard);
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   const editForm = document.querySelector("#edit-form");
+
+//   if (editForm) {
+//     editForm.addEventListener("submit", updateBoard);
+//   }
+// });
 
 //리로드 시 토큰 유무 확인
 // (O : 게시판 불러오기(renderboard), X: 로그인 페이지 (signinpage))
